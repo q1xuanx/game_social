@@ -10,31 +10,32 @@
         android:id="@+id/frameContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0">
+    </FrameLayout>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="322dp"
-        android:layout_height="50dp"
+        android:id="@+id/cardView"
+        android:layout_width="351dp"
+        android:layout_height="54dp"
+        android:layout_gravity="bottom"
         app:cardCornerRadius="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976">
+        app:layout_constraintTop_toTopOf="@+id/frameContainer"
+        app:layout_constraintVertical_bias="0.926">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:itemIconTint="@null"
+            android:layout_height="52dp"
+            android:layout_gravity="bottom"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             app:menu="@menu/menu_add" />
     </androidx.cardview.widget.CardView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
