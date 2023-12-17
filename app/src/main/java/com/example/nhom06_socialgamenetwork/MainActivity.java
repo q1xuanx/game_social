@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.layout_custom);
         bottom = findViewById(R.id.bottomNavigation);
         frameLayout = findViewById(R.id.frameContainer);
-        loadFragment(new FragementNews());
+        //loadFragment(new FragementNews());
         bottom.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public void loadFragment(Fragment fragment){
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         trans.replace(R.id.frameContainer, fragment);
-        trans.addToBackStack(null);
+        //trans.addToBackStack(null);
         trans.commit();
     }
 }

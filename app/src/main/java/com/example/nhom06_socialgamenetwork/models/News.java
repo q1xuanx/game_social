@@ -1,9 +1,13 @@
 package com.example.nhom06_socialgamenetwork.models;
 
+import java.util.List;
+
 public class News {
     private String idPic;
     private String title;
-    private String details;
+    private List<String> picNews;
+    private String timePost;
+    private int Views;
 
     public News(){
 
@@ -12,10 +16,12 @@ public class News {
         this.idPic = idPic;
         this.title = title;
     }
-    public News(String idPic, String title, String details) {
+    public News(String title,String idPic, List<String> details, String time) {
         this.idPic = idPic;
         this.title = title;
-        this.details = details;
+        this.picNews = details;
+        this.timePost = time;
+        this.Views = 0;
     }
 
     public String getIdPic() {
@@ -30,15 +36,33 @@ public class News {
         return title;
     }
 
+    public List<String> getPicNews() {
+        return picNews;
+    }
+
+    public void setPicNews(List<String> picNews) {
+        this.picNews = picNews;
+    }
+
+    public String getTimePost() {
+        return timePost;
+    }
+
+    public void setTimePost(String timePost) {
+        this.timePost = timePost;
+    }
+
+    public int getViews() {
+        return Views;
+    }
+
+    public void setViews(int views) {
+        Views = views;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getDetails() {
-        return details;
-    }
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
 }

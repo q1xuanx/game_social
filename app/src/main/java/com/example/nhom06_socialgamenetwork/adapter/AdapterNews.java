@@ -26,7 +26,7 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder>{
     List<News> list;
     Context context;
     public AdapterNews(List<News> list, Context context){
-        this.list = tempData();
+        this.list = list;
         this.context = context;
     }
     public List<News> tempData(){
@@ -45,6 +45,10 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder>{
         return new ViewHolder(view);
     }
 
+    public void addNews(News s){
+        list.add(s);
+        notifyDataSetChanged();
+    }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         News news = list.get(position);

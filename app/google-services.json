@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "710659276920",
+    "project_id": "socialnetwork-b6cca",
+    "storage_bucket": "socialnetwork-b6cca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710659276920:android:7f95bdcbf1f3370a99ad8d",
+        "android_client_info": {
+          "package_name": "com.example.nhom06_socialgamenetwork"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnNlsdD39ukrhSKIRtPCbiC7SKw11TgTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
