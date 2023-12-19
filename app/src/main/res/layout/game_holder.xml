@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageViewName"
+        android:layout_width="165dp"
+        android:layout_height="146dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <LinearLayout
+        android:layout_width="242dp"
+        android:orientation="vertical"
+        android:layout_height="145dp">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/nameGame"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginLeft="10dp"
+            android:text="TextView"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/Points"
+            android:layout_width="242dp"
+            android:layout_height="78dp"
+            android:layout_gravity="center"
+            android:background="#44D94C"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+</LinearLayout>

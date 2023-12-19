@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:id="@+id/fragment_news"
     android:layout_width="match_parent"
     android:background="@drawable/img_bg_news"
     android:layout_height="match_parent">
@@ -11,21 +12,21 @@
         android:id="@+id/autoScroll"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="35dp"
-        android:layout_marginBottom="10dp">
-    </org.imaginativeworld.whynotimagecarousel.ImageCarousel>
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="10dp"
+        android:layoutMode="clipBounds"></org.imaginativeworld.whynotimagecarousel.ImageCarousel>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#FF3131"
-        android:paddingLeft="25dp"
         android:text="Tin tức"
+        android:paddingTop="5dp"
         android:textColor="#FFFFFF"
         android:textSize="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
+        android:textAlignment="center"
        ></androidx.appcompat.widget.AppCompatTextView>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,10 +42,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="49dp"
+            android:layout_marginBottom="67dp"
             android:backgroundTint="#FFFFFF"
             android:contentDescription="Add News"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             android:scaleType="centerCrop"
             android:src="@drawable/img_add_1"></com.google.android.material.floatingactionbutton.FloatingActionButton>
     </RelativeLayout>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReadDetailsNews">
+
+    <LinearLayout
+        android:id="@+id/layOutView"
+        android:layout_width="407dp"
+        android:layout_height="156dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.137">
+
+        <ImageView
+            android:id="@+id/imageViewDetails"
+            android:layout_width="211dp"
+            android:layout_height="170dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            tools:srcCompat="@drawable/img_add_1" />
+        <LinearLayout
+            android:id="@+id/layoutButton"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/editAnhBia"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:text="Thay Ảnh Bìa"></Button>
+
+            <Button
+                android:id="@+id/themAnhNoiDung"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:text="Thêm Ảnh Nội Dung"></Button>
+
+            <Button
+                android:id="@+id/themNoiDung"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thêm Nội Dung"></Button>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tileDetails"
+        android:layout_width="362dp"
+        android:layout_height="57dp"
+        android:text="TextView"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layOutView"
+        app:layout_constraintVertical_bias="0.038" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:orientation="horizontal"
+        android:background="#0724F8"
+        app:layout_constraintBottom_toTopOf="@+id/layOutView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+        <Button
+            android:id="@+id/editDetailsNews"
+            android:text="Edit"
+            android:layout_width="100dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_height="50dp">
+        </Button>
+        <Button
+            android:id="@+id/backBtnDetails"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Back"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="5dp"></Button>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDetails"
+        android:layout_width="359dp"
+        android:layout_height="399dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tileDetails"
+        app:layout_constraintVertical_bias="0.919" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

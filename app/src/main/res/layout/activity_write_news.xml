@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/container"
         app:layout_constraintVertical_bias="1.0"></Button>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutInput"
@@ -38,7 +38,7 @@
         android:id="@+id/picNewsAdd"
         android:layout_width="146dp"
         android:layout_height="123dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
         android:text="Thêm nội dung"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="@+id/buttonAddText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/picNewsAdd"></TextView>
@@ -99,26 +99,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.346" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="365dp"
-        android:layout_height="340dp"
-        android:contentDescription="Scroll When Full"
-        android:scrollbars="vertical"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/container"
+        android:layout_width="367dp"
+        android:layout_height="353dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.805">
-        <LinearLayout
-            android:id="@+id/layOutDisplay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"></LinearLayout>
-    </ScrollView>
+        app:layout_constraintVertical_bias="0.777" />
 
     <ProgressBar
         android:id="@+id/waitUpload"
@@ -140,6 +129,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.274"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/container"
         app:layout_constraintVertical_bias="1.0"></Button>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,8 +4,8 @@ import java.util.List;
 
 public class News {
     private String idPic;
-    private String title;
     private List<String> picNews;
+    private String title;
     private String timePost;
     private int Views;
 
@@ -16,7 +16,14 @@ public class News {
         this.idPic = idPic;
         this.title = title;
     }
-    public News(String title,String idPic, List<String> details, String time) {
+    public News(String idPic, List<String> details, String time, String title, int views){
+        this.idPic = idPic;
+        this.title = title;
+        this.picNews = details;
+        this.timePost = time;
+        this.Views = views;
+    }
+    public News(String idPic, List<String> details, String time, String title) {
         this.idPic = idPic;
         this.title = title;
         this.picNews = details;

@@ -22,16 +22,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_custom);
+        setContentView(R.layout.activity_main);
         bottom = findViewById(R.id.bottomNavigation);
         frameLayout = findViewById(R.id.frameContainer);
-        //loadFragment(new FragementNews());
+        loadFragment(new FragementNews());
+        bottom.setItemIconTintList(null);
         bottom.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment;
                 if (item.getItemId() == R.id.bottom_news){
                     fragment = new FragementNews();
+                    loadFragment(fragment);
+                }else if (item.getItemId() == R.id.bottom_gamerate){
+                    fragment = new FragmentGame();
                     loadFragment(fragment);
                 }
                 return true;
