@@ -1,5 +1,7 @@
 package com.example.nhom06_socialgamenetwork.models;
 
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class Game {
@@ -37,7 +39,11 @@ public class Game {
         this.totalPoint = 0;
         this.rateTimes = 0;
     }
-
+    public Game(String idPic, String nameGame, List<GameComment> list){
+        this.idPic = idPic;
+        this.nameGame = nameGame;
+        this.list = list;
+    }
     public String getIdPic() {
         return idPic;
     }

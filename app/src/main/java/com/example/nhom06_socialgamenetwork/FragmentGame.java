@@ -1,6 +1,7 @@
 package com.example.nhom06_socialgamenetwork;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -48,9 +49,9 @@ public class FragmentGame extends Fragment implements RecyclerViewInterface {
         recyclerGacha = v.findViewById(R.id.recyclerGACHA);
     }
     public void setItemRecycler(List<Pair<String,Game>> listMoba, List<Pair<String,Game>> listFPS, List<Pair<String,Game>> listGacha){
-        AdapterGame adapterFps = new AdapterGame(listFPS);
-        AdapterGame adapterMoba = new AdapterGame(listMoba);
-        AdapterGame adapterGacha = new AdapterGame(listGacha);
+        AdapterGame adapterFps = new AdapterGame(listFPS,this);
+        AdapterGame adapterMoba = new AdapterGame(listMoba,this);
+        AdapterGame adapterGacha = new AdapterGame(listGacha,this);
         recyclerMoba.setAdapter(adapterMoba);
         recyclerFPS.setAdapter(adapterFps);
         recyclerGacha.setAdapter(adapterGacha);
@@ -150,5 +151,27 @@ public class FragmentGame extends Fragment implements RecyclerViewInterface {
     @Override
     public void onItemClick(int postion) {
 
+    }
+
+    @Override
+    public void itemClickGame(int position, String gameType) {
+        Intent intent = new Intent(FragmentGame.this.getContext(), ActivityRateGame.class);
+        if(gameType.equals("GACHA")){
+            intent.putExtra("key",listGacha.get(position).first);
+            intent.putExtra("Pic",listGacha.get(position).second.getIdPic());
+            intent.putExtra("NameGame",listGacha.get(position).second.getNameGame());
+            intent.putExtra("Point",listGacha.get(position).second.getTotalPoint());
+        }else if (gameType.equals("FPS")){
+            intent.putExtra("key",listFPS.get(position).first);
+            intent.putExtra("Pic",listFPS.get(position).second.getIdPic());
+            intent.putExtra("NameGame",listFPS.get(position).second.getNameGame());
+            intent.putExtra("Point",listFPS.get(position).second.getTotalPoint());
+        }else {
+            intent.putExtra("key",listMoba.get(position).first);
+            intent.putExtra("Pic",listMoba.get(position).second.getIdPic());
+            intent.putExtra("NameGame",listMoba.get(position).second.getNameGame());
+            intent.putExtra("Point",listMoba.get(position).second.getTotalPoint());
+        }
+        startActivity(intent);
     }
 }

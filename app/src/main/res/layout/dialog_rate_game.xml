@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="359dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="50dp">
+
+        <TextView
+            android:layout_width="355dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="REVIEW"
+            android:textAlignment="center"
+            android:textSize="20dp"></TextView>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="393dp"
+        android:layout_marginTop="40dp"
+        app:cardCornerRadius="40dp"
+        android:layout_gravity="center"
+        android:layout_height="361dp">
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F4E5FF"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                android:text="Score: "
+                android:textSize="20dp"
+                android:layout_width="100dp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"></TextView>
+            <SeekBar
+                android:layout_marginTop="5dp"
+                android:id="@+id/seekBar2"
+                android:layout_gravity="center"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:max="10"
+                android:progress="1" />
+
+            <EditText
+                android:id="@+id/rateUser"
+                android:layout_width="348dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_edit_text"
+                android:hint="Đánh giá"></EditText>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_marginTop="20dp"
+                android:id="@+id/addRateGame"
+                android:layout_width="258dp"
+                android:layout_height="58dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_add"
+                android:text="Post now?"></androidx.appcompat.widget.AppCompatButton>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -181,6 +181,11 @@ public class FragementNews extends Fragment implements RecyclerViewInterface {
     }
 
     @Override
+    public void itemClickGame(int position, String gameType) {
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         databaseReference = FirebaseDatabase.getInstance().getReference();

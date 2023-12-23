@@ -6,73 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".ActivityRateGame">
 
+
+
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageGame"
+        android:layout_width="333dp"
+        android:layout_height="144dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.026"
+        app:layout_constraintVertical_bias="0.027"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="232dp"
+        android:layout_height="68dp"
+        android:background="@drawable/border_edit_text"
+        android:gravity="center"
+        android:text="Game Name"
+        android:textAlignment="center"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.274"></TextView>
+
+    <TextView
+        android:id="@+id/textViewPt"
+        android:layout_width="78dp"
+        android:layout_height="69dp"
+        android:background="@drawable/circle_point"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="99"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        app:layout_constraintHorizontal_bias="0.882"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.273" />
+
+    <TextView
         android:layout_width="203dp"
-        android:layout_height="128dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="86dp"
+        android:layout_marginBottom="220dp"
+        android:text="Reviews"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/listUserRate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.026">
-    </TextView>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="355dp"
-        android:layout_height="153dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.288">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thêm Đánh Giá Của Bạn"
-            android:textAlignment="center"
-            android:textSize="20dp"></TextView>
-
-        <SeekBar
-            android:id="@+id/seekBar2"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:max="10"
-            android:progress="1" />
-
-        <EditText
-            android:id="@+id/rateUser"
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:text="Đánh giá"></EditText>
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.283"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listUserRate"
-        android:layout_width="match_parent"
-        android:layout_height="207dp"
-        android:layout_marginTop="198dp"
+        android:layout_width="366dp"
+        android:layout_height="261dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.711" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/writeRate"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/img_write"
+        app:layout_constraintVertical_bias="0.932"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 </androidx.constraintlayout.widget.ConstraintLayout>
