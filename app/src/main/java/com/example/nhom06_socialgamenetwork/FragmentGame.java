@@ -1,9 +1,18 @@
 package com.example.nhom06_socialgamenetwork;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,23 +22,133 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nhom06_socialgamenetwork.adapter.AdapterGame;
 import com.example.nhom06_socialgamenetwork.models.Game;
+import com.example.nhom06_socialgamenetwork.models.News;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentGame extends Fragment {
-    RecyclerView recyclerView;
+public class FragmentGame extends Fragment implements RecyclerViewInterface {
+    RecyclerView recyclerMoba, recyclerFPS, recyclerGacha;
     AdapterGame adapterGame;
-    List<Game> list;
+    String typeGame = "GACHA";
+    FloatingActionButton button;
+    DatabaseReference databaseReference;
+    List<Pair<String,Game>> listMoba, listFPS, listGacha;
+
+    public void initRecycler(View v){
+        recyclerMoba = v.findViewById(R.id.recyclerMOBA);
+        recyclerFPS = v.findViewById(R.id.recyclerFPS);
+        recyclerGacha = v.findViewById(R.id.recyclerGACHA);
+    }
+    public void setItemRecycler(List<Pair<String,Game>> listMoba, List<Pair<String,Game>> listFPS, List<Pair<String,Game>> listGacha){
+        AdapterGame adapterFps = new AdapterGame(listFPS);
+        AdapterGame adapterMoba = new AdapterGame(listMoba);
+        AdapterGame adapterGacha = new AdapterGame(listGacha);
+        recyclerMoba.setAdapter(adapterMoba);
+        recyclerFPS.setAdapter(adapterFps);
+        recyclerGacha.setAdapter(adapterGacha);
+        setAllLayout(recyclerGacha,recyclerMoba,recyclerFPS);
+    }
+    private void setAllLayout(RecyclerView recyclerGacha, RecyclerView recyclerMoba, RecyclerView recyclerFPS) {
+        recyclerGacha.setLayoutManager(new LinearLayoutManager(FragmentGame.this.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerMoba.setLayoutManager(new LinearLayoutManager(FragmentGame.this.getContext(),LinearLayoutManager.HORIZONTAL, false));
+        recyclerFPS.setLayoutManager(new LinearLayoutManager(FragmentGame.this.getContext(),LinearLayoutManager.HORIZONTAL, false));
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_game_layout,container,false);
-        recyclerView = v.findViewById(R.id.gameOverview);
-        list = new ArrayList<>();
-        adapterGame = new AdapterGame(list);
-        recyclerView.setAdapter(adapterGame);
-        recyclerView.setLayoutManager(new LinearLayoutManager(FragmentGame.this.getContext()));
+        listMoba = new ArrayList<>();
+        listFPS = new ArrayList<>();
+        listGacha = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        initRecycler(v);
+        databaseReference.child("game").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listMoba.clear();
+                listFPS.clear();
+                listGacha.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    Game game = snapshot1.getValue(Game.class);
+                    if (game.getGameType().equals("GACHA")) {
+                        listGacha.add(new Pair<>(snapshot1.getKey(), game));
+                    }else if (game.getGameType().equals("MOBA")){
+                        listMoba.add(new Pair<>(snapshot1.getKey(), game));
+                    }else {
+                        listFPS.add(new Pair<>(snapshot1.getKey(), game));
+                    }
+                }
+                setItemRecycler(listMoba, listFPS, listGacha);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        button = v.findViewById(R.id.addGameToRate);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog = new Dialog(FragmentGame.this.getContext());
+                dialog.setContentView(R.layout.dialog_add_game);
+                EditText nameGame = dialog.findViewById(R.id.tenGame);
+                EditText urlImg = dialog.findViewById(R.id.anhGame);
+                Button addGame = dialog.findViewById(R.id.themGameDeDanhGia);
+                Spinner spinner = dialog.findViewById(R.id.spinnerAddGame);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(FragmentGame.this.getContext(),R.array.game_type, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+                dialog.getWindow().setAttributes(changeSizeOfDialog(dialog));
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        typeGame = (String) adapterView.getItemAtPosition(i);
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        typeGame = "GACHA";
+                    }
+                });
+                addGame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (nameGame.getText().toString().equals("") || urlImg.getText().toString().equals("")){
+                            Toast.makeText(FragmentGame.this.getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_LONG).show();
+                        }else {
+                            Game game = new Game(urlImg.getText().toString(),nameGame.getText().toString(), typeGame);
+                            DatabaseReference dataadd = databaseReference.child("game").push();
+                            dataadd.setValue(game).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(FragmentGame.this.getContext(),"Đã thêm thành công", Toast.LENGTH_LONG).show();
+                                    dialog.dismiss();
+                                }
+                            });
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
         return v;
+    }
+    public WindowManager.LayoutParams changeSizeOfDialog(Dialog dialog){
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        return layoutParams;
+    }
+    @Override
+    public void onItemClick(int postion) {
+
     }
 }

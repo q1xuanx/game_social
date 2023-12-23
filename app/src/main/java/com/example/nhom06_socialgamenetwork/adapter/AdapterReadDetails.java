@@ -1,6 +1,7 @@
 package com.example.nhom06_socialgamenetwork.adapter;
 
 import android.content.Context;
+import android.content.UriMatcher;
 import android.net.Uri;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -26,6 +27,14 @@ public class AdapterReadDetails extends RecyclerView.Adapter<AdapterReadDetails.
         this.list = list;
         this.context = context;
     }
+    public void changeList(List<String> s){
+        this.list = s;
+        notifyDataSetChanged();
+    }
+    public void editData(int pos, String s){
+        list.set(pos,s);
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public HolderView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,7 +45,7 @@ public class AdapterReadDetails extends RecyclerView.Adapter<AdapterReadDetails.
     @Override
     public void onBindViewHolder(@NonNull HolderView holder, int position) {
         String news = list.get(position);
-        if (Patterns.WEB_URL.matcher(news).matches()){
+        if (Patterns.WEB_URL.matcher(news).matches() || news.contains("content://")){
             Picasso.get().load(Uri.parse(news)).into(holder.imgView);
             holder.txtView.setVisibility(View.GONE);
         }else {
@@ -48,6 +57,10 @@ public class AdapterReadDetails extends RecyclerView.Adapter<AdapterReadDetails.
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public String getData(int bindingAdapterPosition) {
+        return list.get(bindingAdapterPosition);
     }
 
     public static class HolderView extends RecyclerView.ViewHolder{

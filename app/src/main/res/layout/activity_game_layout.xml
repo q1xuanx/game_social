@@ -6,29 +6,125 @@
     android:layout_height="match_parent"
     tools:context=".game_layout">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="107dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="116dp"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GACHA"
+            android:textAlignment="center"
+            android:textSize="15dp"></TextView>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:id="@+id/recyclerGACHA"
+        android:layout_width="355dp"
+        android:layout_height="126dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.261"></androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="107dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="116dp"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.332">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FPS"
+            android:textAlignment="center"
+            android:textSize="15dp"></TextView>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/recyclerFPS"
+        android:layout_width="355dp"
+        android:layout_height="126dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58"></androidx.recyclerview.widget.RecyclerView>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="107dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="116dp"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.674">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MOBA"
+            android:textAlignment="center"
+            android:textSize="15dp"></TextView>
+    </androidx.cardview.widget.CardView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/recyclerMOBA"
+        android:layout_width="355dp"
+        android:layout_height="126dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.895"></androidx.recyclerview.widget.RecyclerView>
+
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="105dp"
-        android:layout_marginBottom="622dp"
+        android:background="#0277BD"
         android:gravity="center"
         android:text="Game Overview"
         android:textAlignment="center"
-        android:textSize="40dp"
         android:textColor="@color/white"
-        android:background="#0277BD"
-        app:layout_constraintBottom_toBottomOf="@+id/gameOverview"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/gameOverview"
-        android:layout_width="376dp"
-        android:layout_height="615dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addGameToRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintHorizontal_bias="0.89"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.956" />
+        app:layout_constraintVertical_bias="0.829" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

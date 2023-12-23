@@ -48,6 +48,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -322,9 +323,10 @@ public class WriteNews extends AppCompatActivity {
                         news.setTitle(title.getText().toString());
                         news.setIdPic(idAnhBia);
                         news.setPicNews(getAllIdPic);
-                        Date timePost = new Date();
-                        news.setTimePost(String.valueOf(timePost.getTime()));
-                        databaseReference.child("post").child(news.getTitle()).setValue(news).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        LocalDateTime timePost = LocalDateTime.now();
+                        news.setTimePost(String.valueOf(timePost));
+                        DatabaseReference datapush = databaseReference.child("post").push();
+                        datapush.setValue(news).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(WriteNews.this, "Đã thêm thành công", Toast.LENGTH_LONG).show();

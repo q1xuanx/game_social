@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Nhom06SocialGameNetwork"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityRateGame"
+            android:exported="false" />
+        <activity
             android:name=".game_layout"
             android:exported="false" />
         <activity

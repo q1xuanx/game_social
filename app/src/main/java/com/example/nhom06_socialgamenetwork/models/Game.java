@@ -1,16 +1,39 @@
 package com.example.nhom06_socialgamenetwork.models;
 
+import java.util.List;
+
 public class Game {
     private String idPic;
     private String nameGame;
-    private String detailsGame;
     private int totalPoint;
     private int rateTimes;
+    private String gameType;
+    private List<GameComment> list;
 
-    public Game(String idPic,String nameGame, String detailsGame) {
+    public Game(){
+
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
+    }
+
+    public List<GameComment> getList() {
+        return list;
+    }
+
+    public void setList(List<GameComment> list) {
+        this.list = list;
+    }
+
+    public Game(String idPic, String nameGame, String typeGame) {
         this.idPic = idPic;
         this.nameGame = nameGame;
-        this.detailsGame = detailsGame;
+        this.gameType = typeGame;
         this.totalPoint = 0;
         this.rateTimes = 0;
     }
@@ -29,14 +52,6 @@ public class Game {
 
     public void setNameGame(String nameGame) {
         this.nameGame = nameGame;
-    }
-
-    public String getDetailsGame() {
-        return detailsGame;
-    }
-
-    public void setDetailsGame(String detailsGame) {
-        this.detailsGame = detailsGame;
     }
 
     public int getTotalPoint() {

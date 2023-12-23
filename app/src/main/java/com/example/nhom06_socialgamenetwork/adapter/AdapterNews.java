@@ -3,6 +3,7 @@ package com.example.nhom06_socialgamenetwork.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,43 +26,50 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder>{
+public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder> {
 
     RecyclerViewInterface recyclerViewInterface;
-    List<News> list;
+    List<Pair<String, News>> list;
     public static Context context;
-    public AdapterNews(List<News> list, Context context, RecyclerViewInterface recyclerViewInterface){
+
+    public AdapterNews(List<Pair<String, News>> list, Context context, RecyclerViewInterface recyclerViewInterface) {
         this.list = list;
         this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_holder,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_holder, parent, false);
         return new ViewHolder(view, recyclerViewInterface);
     }
 
-    public void addNews(News s){
-        list.add(s);
+    public void addNews(String key, News s) {
+        list.add(new Pair<>(key, s));
         notifyDataSetChanged();
     }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        News news = list.get(position);
-        Uri uri = Uri.parse(news.getIdPic());
-        Picasso.get().load(uri).into(holder.img);
-        holder.title.setText(news.getTitle().toString());
+        News news = list.get(position).second;
+        if(news.getIsDelete() == 0) {
+            Uri uri = Uri.parse(news.getIdPic());
+            Picasso.get().load(uri).into(holder.img);
+            holder.title.setText(news.getTitle().toString());
+        }
     }
+
     @Override
     public int getItemCount() {
         return list.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title;
         ImageView img;
+
         public ViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             title = itemView.findViewById(R.id.news_title);
@@ -69,9 +77,9 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder>{
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (recyclerViewInterface != null){
+                    if (recyclerViewInterface != null) {
                         int pos = getBindingAdapterPosition();
-                        if (pos != RecyclerView.NO_POSITION){
+                        if (pos != RecyclerView.NO_POSITION) {
                             recyclerViewInterface.onItemClick(pos);
                         }
                     }

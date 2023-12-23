@@ -8,10 +8,20 @@ public class News {
     private String title;
     private String timePost;
     private int Views;
+    private int isDelete;
 
     public News(){
 
     }
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public News(String idPic, String title) {
         this.idPic = idPic;
         this.title = title;
@@ -22,6 +32,7 @@ public class News {
         this.picNews = details;
         this.timePost = time;
         this.Views = views;
+        this.isDelete = 0;
     }
     public News(String idPic, List<String> details, String time, String title) {
         this.idPic = idPic;

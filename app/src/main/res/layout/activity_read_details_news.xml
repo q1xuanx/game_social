@@ -20,11 +20,12 @@
 
         <ImageView
             android:id="@+id/imageViewDetails"
-            android:layout_width="211dp"
+            android:layout_width="202dp"
             android:layout_height="170dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            tools:srcCompat="@drawable/img_add_1" />
+            tools:srcCompat="@drawable/googleg_disabled_color_18" />
+
         <LinearLayout
             android:id="@+id/layoutButton"
             android:layout_width="match_parent"
@@ -77,14 +78,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
         <Button
             android:id="@+id/editDetailsNews"
-            android:text="Edit"
             android:layout_width="100dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="2dp"
-            android:layout_height="50dp">
-        </Button>
+            android:layout_marginTop="5dp"
+            android:text="Edit"></Button>
+
         <Button
             android:id="@+id/backBtnDetails"
             android:layout_width="100dp"
@@ -105,4 +107,17 @@
         app:layout_constraintTop_toBottomOf="@+id/tileDetails"
         app:layout_constraintVertical_bias="0.919" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/completeBtn"
+        android:layout_width="57dp"
+        android:layout_height="60dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/img_check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.564"
+        android:contentDescription="Finish Custom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.927"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 </androidx.constraintlayout.widget.ConstraintLayout>

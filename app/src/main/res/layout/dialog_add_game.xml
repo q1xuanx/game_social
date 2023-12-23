@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:text="Add New Game"></TextView>
+        <EditText
+            android:id="@+id/tenGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập tên game">
+        </EditText>
+
+        <EditText
+            android:id="@+id/anhGame"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="URL hình ảnh"></EditText>
+
+        <Spinner
+            android:id="@+id/spinnerAddGame"
+            android:layout_width="match_parent"
+            android:layout_height="63dp">
+        </Spinner>
+        <Button
+            android:id="@+id/themGameDeDanhGia"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Thêm"></Button>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
