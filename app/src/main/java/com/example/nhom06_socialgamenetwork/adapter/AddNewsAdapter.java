@@ -15,11 +15,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nhom06_socialgamenetwork.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Map;
 
-public class AddNewsAdapter extends RecyclerView.Adapter<AddNewsAdapter.HolderNews> {
+public class AddNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<Pair<String, String>> list;
     public AddNewsAdapter(List<Pair<String, String>> list){
@@ -42,25 +43,39 @@ public class AddNewsAdapter extends RecyclerView.Adapter<AddNewsAdapter.HolderNe
     public String getData(int pos){
         return list.get(pos).second;
     }
+
     @NonNull
     @Override
-    public HolderNews onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_news_add,parent,false);
-        return new HolderNews(v);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == 1){
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_news_add_img, parent, false);
+            return new HolderImage(v);
+        }else {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_news_add, parent, false);
+            return new HolderNews(v);
+        }
+    }
+    @Override
+    public int getItemViewType(int position) {
+        String key = list.get(position).first;
+        if (key.equals("picture")){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HolderNews holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         String key = list.get(position).first;
         String value = list.get(position).second;
         if (key.equals("picture")){
-            holder.imgView.setImageURI(Uri.parse(value));
-            holder.txtView.setVisibility(View.GONE);
+            HolderImage imgHold = (HolderImage) holder;
+            Picasso.get().load(Uri.parse(value)).into(imgHold.imageView);
         }else {
-            holder.txtView.setText(value);
-            holder.imgView.setVisibility(View.GONE);
+            HolderNews holderNews = (HolderNews) holder;
+            holderNews.txtView.setText(value);
         }
-
     }
 
     @Override
@@ -69,12 +84,17 @@ public class AddNewsAdapter extends RecyclerView.Adapter<AddNewsAdapter.HolderNe
     }
 
     static class HolderNews extends RecyclerView.ViewHolder{
-        ImageView imgView;
         TextView txtView;
         public HolderNews(@NonNull View itemView) {
             super(itemView);
-            imgView = itemView.findViewById(R.id.imgViewDisplay);
             txtView = itemView.findViewById(R.id.textViewDisplay);
+        }
+    }
+    static class HolderImage extends  RecyclerView.ViewHolder{
+        ImageView imageView;
+        public HolderImage(@NonNull View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imgNews);
         }
     }
 }
