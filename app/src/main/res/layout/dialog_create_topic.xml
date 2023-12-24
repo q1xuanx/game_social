@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="50dp"
+
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:background="@drawable/game_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="274dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Name"
+            android:textSize="25dp"></TextView>
+
+        <EditText
+            android:layout_width="366dp"
+            android:layout_height="51dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/border_edit_text"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Title"
+            android:textSize="20dp"></EditText>
+
+        <ImageView
+            android:id="@+id/imageViewTopic"
+            android:layout_width="359dp"
+            android:layout_height="148dp"
+            android:layout_gravity="center"></ImageView>
+
+        <EditText
+            android:id="@+id/addDetailsTopic"
+            android:layout_width="381dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/border_edit_text"
+            android:gravity="center"
+            android:hint="Viết gì đó nha"
+            android:maxLines="3"></EditText>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addTopic"
+            android:layout_width="194dp"
+            android:layout_height="58dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border_add"
+            android:text="Post It !">
+
+        </androidx.appcompat.widget.AppCompatButton>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

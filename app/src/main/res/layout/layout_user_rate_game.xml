@@ -10,17 +10,25 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:background="@drawable/circle_point"
             android:id="@+id/pointGet"
             android:layout_width="89dp"
-            android:layout_marginTop="0dp"
+            android:text="100"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:layout_height="74dp"></TextView>
 
         <TextView
-            android:layout_marginTop="20dp"
             android:id="@+id/nameUserRate"
             android:layout_width="178dp"
             android:layout_height="74dp"
+            android:layout_gravity="center"
+            android:background="@drawable/border_edit_text"
+            android:gravity="center"
             android:text="Name User"
+            android:textAlignment="center"
             android:textSize="20dp"></TextView>
     </LinearLayout>
     <TextView
@@ -30,6 +38,7 @@
         android:layout_height="80dp"
         android:maxLines="3"
         android:ellipsize="end"
+        android:textSize="20dp"
         android:text="Comment">
     </TextView>
 </LinearLayout>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="305dp"
@@ -16,14 +16,14 @@
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="REVIEW"
+            android:text="COMMENT"
             android:textAlignment="center"
             android:textSize="20dp"></TextView>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="336dp"
-        android:layout_height="294dp"
+        android:layout_width="342dp"
+        android:layout_height="224dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         app:cardCornerRadius="40dp">
@@ -31,36 +31,18 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="226dp"
             android:background="#F4E5FF"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="20dp"
-                android:text="Score: "
-                android:textSize="20dp"
-                android:textStyle="bold"></TextView>
-
-            <SeekBar
-                android:id="@+id/seekBar2"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="297dp"
-                android:layout_height="44dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:max="10"
-                android:progress="1" />
-
             <EditText
                 android:id="@+id/rateUser"
-                android:layout_width="288dp"
-                android:layout_height="121dp"
+                android:layout_width="293dp"
+                android:layout_height="96dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/border_edit_text"
-                android:hint="Đánh giá"></EditText>
+                android:hint="Viết bình luận"></EditText>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addRateGame"

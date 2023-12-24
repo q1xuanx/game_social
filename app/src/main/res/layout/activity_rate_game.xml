@@ -69,8 +69,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listUserRate"
-        android:layout_width="366dp"
-        android:layout_height="261dp"
+        android:layout_width="320dp"
+        android:layout_height="254dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
