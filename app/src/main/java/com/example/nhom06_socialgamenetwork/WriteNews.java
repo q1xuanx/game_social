@@ -115,7 +115,7 @@ public class WriteNews extends AppCompatActivity {
             }
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                if(viewHolder.itemView.findViewById(R.id.imgViewDisplay).isShown()) {
+                if(viewHolder.getItemViewType() == 1) {
                     Dialog dialog = new Dialog(WriteNews.this);
                     dialog.setContentView(R.layout.add_img_to_news);
                     Button addImg = dialog.findViewById(R.id.alertNewsImg);

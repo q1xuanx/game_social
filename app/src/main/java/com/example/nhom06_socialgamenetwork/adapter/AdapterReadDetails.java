@@ -2,6 +2,7 @@ package com.example.nhom06_socialgamenetwork.adapter;
 
 import android.content.Context;
 import android.content.UriMatcher;
+import android.media.Image;
 import android.net.Uri;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdapterReadDetails extends RecyclerView.Adapter<AdapterReadDetails.HolderView> {
+public class AdapterReadDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<String> list;
     Context context;
@@ -35,22 +36,38 @@ public class AdapterReadDetails extends RecyclerView.Adapter<AdapterReadDetails.
         list.set(pos,s);
         notifyDataSetChanged();
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        String news = list.get(position);
+        if (Patterns.WEB_URL.matcher(news).matches() || news.contains("content://")){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+
     @NonNull
     @Override
-    public HolderView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_news_add,parent,false);
-        return new HolderView(v);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == 1){
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_news_add_img, parent, false);
+            return new HolderImagee(v);
+        }else {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_news_add, parent, false);
+            return new HolderView(v);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HolderView holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         String news = list.get(position);
         if (Patterns.WEB_URL.matcher(news).matches() || news.contains("content://")){
-            Picasso.get().load(Uri.parse(news)).into(holder.imgView);
-            holder.txtView.setVisibility(View.GONE);
+            HolderImagee holderImg = (HolderImagee) holder;
+            Picasso.get().load(Uri.parse(news)).into(holderImg.imgView);
         }else {
-            holder.txtView.setText(news);
-            holder.imgView.setVisibility(View.GONE);
+            HolderView holderView = (HolderView) holder;
+            holderView.txtView.setText(news);
         }
     }
 
@@ -64,12 +81,18 @@ public class AdapterReadDetails extends RecyclerView.Adapter<AdapterReadDetails.
     }
 
     public static class HolderView extends RecyclerView.ViewHolder{
-        ImageView imgView;
         TextView txtView;
         public HolderView(@NonNull View itemView) {
             super(itemView);
-            imgView = itemView.findViewById(R.id.imgViewDisplay);
             txtView = itemView.findViewById(R.id.textViewDisplay);
+        }
+    }
+
+    public static class HolderImagee extends RecyclerView.ViewHolder{
+        ImageView imgView;
+        public HolderImagee(@NonNull View itemView) {
+            super(itemView);
+            imgView = itemView.findViewById(R.id.imgNews);
         }
     }
 }
