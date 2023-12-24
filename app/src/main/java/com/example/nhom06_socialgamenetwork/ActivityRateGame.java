@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +37,12 @@ public class ActivityRateGame extends AppCompatActivity {
         gameName.setText(getIntent().getStringExtra("NameGame"));
         totalPointGet.setText(String.valueOf(getIntent().getIntExtra("Point",-1)));
         game = new Game(getIntent().getStringExtra("Pic"), getIntent().getStringExtra("NameGame"),list);
+        writeRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
     public void init(){
         imgView = findViewById(R.id.imageGame);
