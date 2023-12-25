@@ -27,27 +27,26 @@
         android:layout_width="143dp"
         android:layout_height="100dp"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="18dp"
         android:src="@drawable/game_logo"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewDiscuss"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"></ImageView>
+        app:layout_constraintVertical_bias="0.039"></ImageView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDiscuss"
-        android:layout_width="350dp"
-        android:layout_height="573dp"
+        android:layout_width="362dp"
+        android:layout_height="519dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.797"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintVertical_bias="0.801"></androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/postTopic"

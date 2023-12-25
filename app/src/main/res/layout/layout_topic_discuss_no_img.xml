@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="20dp"
     android:layout_gravity="center"
+    android:layout_marginTop="20dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -12,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/userNamePost"
+            android:id="@+id/userNamePostNoImg"
             android:layout_marginLeft="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,23 +23,17 @@
 
         <TextView
             android:textSize="15dp"
-            android:id="@+id/titlePost"
+            android:id="@+id/titlePostNoImg"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Title"></TextView>
 
-        <ImageView
-            android:id="@+id/imageTopic"
-            android:layout_width="300dp"
-            android:layout_gravity="center"
-            android:layout_height="99dp"></ImageView>
-
         <TextView
-            android:id="@+id/clickToDiscuss"
-            android:layout_width="114dp"
-            android:layout_height="34dp"
+            android:id="@+id/clickToDiscussNoImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="240dp"
             android:text="Click to discuss"></TextView>
     </LinearLayout>

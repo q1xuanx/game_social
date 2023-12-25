@@ -1,12 +1,15 @@
 package com.example.nhom06_socialgamenetwork.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Discuss {
     private String namePost;
     private String title;
     private String idPic;
     private String details;
-    private int like;
-    private int dislike;
+    private List<Integer> like;
+    private List<Integer> dislike;
 
 
     public Discuss(){
@@ -17,6 +20,8 @@ public class Discuss {
         this.title = title;
         this.idPic = idPic;
         this.details = details;
+        this.like = new ArrayList<>();
+        this.dislike = new ArrayList<>();
     }
 
     public String getNamePost() {
@@ -51,19 +56,20 @@ public class Discuss {
         this.details = details;
     }
 
-    public int getLike() {
+
+    public List<Integer> getLike() {
         return like;
     }
 
-    public void setLike(int like) {
+    public void setLike(List<Integer> like) {
         this.like = like;
     }
 
-    public int getDislike() {
+    public List<Integer> getDislike() {
         return dislike;
     }
 
-    public void setDislike(int dislike) {
+    public void setDislike(List<Integer> dislike) {
         this.dislike = dislike;
     }
 }
