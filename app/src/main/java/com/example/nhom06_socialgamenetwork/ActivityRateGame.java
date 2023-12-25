@@ -111,14 +111,18 @@ public class ActivityRateGame extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
                             Game game1 = snapshot.getValue(Game.class);
+                            boolean isCmt = false;
                             if (game1.getList() != null){
                                 for(GameComment gm1 : game1.getList()){
                                     if (gm1.getNameComment().equals(MainActivity.user.getEmail())){
-                                        Toast.makeText(ActivityRateGame.this, "Bạn đã đánh giá game này rồi", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }else {
-                                        dialog.show();
+                                        isCmt = true;
                                     }
+                                }
+                                if (isCmt){
+                                    Toast.makeText(ActivityRateGame.this, "Bạn đã đánh giá game này rồi", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }else{
+                                    dialog.show();
                                 }
                             }else {
                                 dialog.show();
