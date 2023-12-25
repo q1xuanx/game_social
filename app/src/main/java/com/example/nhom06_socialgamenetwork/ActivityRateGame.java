@@ -1,5 +1,6 @@
 package com.example.nhom06_socialgamenetwork;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +21,15 @@ import android.widget.Toast;
 import com.example.nhom06_socialgamenetwork.adapter.AdapterUserRateGame;
 import com.example.nhom06_socialgamenetwork.models.Game;
 import com.example.nhom06_socialgamenetwork.models.GameComment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,18 +44,12 @@ public class ActivityRateGame extends AppCompatActivity {
     String key, idPic; // key va hinh anh cua game;
     List<GameComment> list;
     AdapterUserRateGame adapterUserRateGame; // adapter add comment
+    DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate_game);
         init();
-        list = new ArrayList<>();
-        key = getIntent().getStringExtra("key");
-        idPic = getIntent().getStringExtra("Pic");
-        Picasso.get().load(Uri.parse(idPic)).into(imgView);
-        gameName.setText(getIntent().getStringExtra("NameGame"));
-        totalPointGet.setText(String.valueOf(getIntent().getIntExtra("Point",-1)));
-        game = new Game(getIntent().getStringExtra("Pic"), getIntent().getStringExtra("NameGame"),list);
 
         // Button đánh giá game
         writeRate.setOnClickListener(new View.OnClickListener() {
@@ -61,18 +64,72 @@ public class ActivityRateGame extends AppCompatActivity {
                 addComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //Todo them vao firebase
+
                         if(comment.getText().toString().equals("")){
                             Toast.makeText(ActivityRateGame.this, "Vui lòng nhập ý kiến của bạn", Toast.LENGTH_SHORT);
                         }else {
-                            GameComment gm = new GameComment(MainActivity.user.getEmail(), comment.getText().toString(), Integer.parseInt(String.valueOf(point.getProgress())));
-                            addItemRecyclerView(gm);
-                            Toast.makeText(ActivityRateGame.this, "Cảm ơn bạn đã đánh giá", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                            DatabaseReference dbref = databaseReference.child("game").child(key);
+                            dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        Game game = snapshot.getValue(Game.class);
+                                        GameComment gm = new GameComment(MainActivity.user.getEmail(), comment.getText().toString(), point.getProgress());
+                                        if (game.getList() == null){
+                                            List<GameComment> listComment = new ArrayList<>();
+                                            game.setList(listComment);
+                                            game.getList().add(gm);
+                                        }else {
+                                            game.getList().add(gm);
+                                        }
+                                        dbref.setValue(game).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(ActivityRateGame.this, "Cảm ơn đánh giá của bạn", Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(ActivityRateGame.this, "Có lỗi xảy ra trong quá trình rate game", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
                     }
                 });
-                dialog.show();
+                DatabaseReference dbcheckExist = databaseReference.child("game").child(key);
+                dbcheckExist.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            Game game1 = snapshot.getValue(Game.class);
+                            if (game1.getList() != null){
+                                for(GameComment gm1 : game1.getList()){
+                                    if (gm1.getNameComment().equals(MainActivity.user.getEmail())){
+                                        Toast.makeText(ActivityRateGame.this, "Bạn đã đánh giá game này rồi", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }else {
+                                        dialog.show();
+                                    }
+                                }
+                            }else {
+                                dialog.show();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
     }
@@ -82,11 +139,44 @@ public class ActivityRateGame extends AppCompatActivity {
         totalPointGet = findViewById(R.id.textViewPt);
         recyclerView = findViewById(R.id.listUserRate);
         writeRate = findViewById(R.id.writeRate);
+        key = getIntent().getStringExtra("key");
+        idPic = getIntent().getStringExtra("Pic");
+        Picasso.get().load(Uri.parse(idPic)).into(imgView);
+        gameName.setText(getIntent().getStringExtra("NameGame"));
+        totalPointGet.setText(String.valueOf(getIntent().getIntExtra("Point",-1)));
+        game = new Game(getIntent().getStringExtra("Pic"), getIntent().getStringExtra("NameGame"),list);
         list = new ArrayList<>();
-        adapterUserRateGame = new AdapterUserRateGame(list);
-        recyclerView.setAdapter(adapterUserRateGame);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ActivityRateGame.this));
         game = new Game();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        dataChange();
+    }
+    public void dataChange(){
+        databaseReference.child("game").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                Game game = snapshot.getValue(Game.class);
+                int avg = 0;
+                if (game.getList() == null){
+                    game.setList(list);
+                }else {
+                    list = game.getList();
+                }
+                for (GameComment gm1 : list){
+                    avg += gm1.getPoint();
+                }
+                if (list.size() != 0){
+                    totalPointGet.setText(String.valueOf(avg / list.size()));
+                }
+                adapterUserRateGame = new AdapterUserRateGame(list);
+                recyclerView.setAdapter(adapterUserRateGame);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ActivityRateGame.this));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     public WindowManager.LayoutParams changeSizeOfDialog(Dialog dialog){
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();

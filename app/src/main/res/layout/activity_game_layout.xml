@@ -9,30 +9,28 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerGACHA"
-        android:layout_width="355dp"
-        android:layout_height="160dp"
+        android:layout_width="352dp"
+        android:layout_height="156dp"
         android:layout_marginLeft="10dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintHorizontal_bias="0.271"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.299" />
+        app:layout_constraintVertical_bias="0.273" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="107dp"
         android:layout_height="34dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="10dp"
         app:cardBackgroundColor="#FA8787"
         app:cardCornerRadius="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerFPS"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerGACHA"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.451">
 
         <TextView
             android:layout_width="match_parent"
@@ -45,18 +43,19 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFPS"
-        android:layout_width="355dp"
-        android:layout_height="160dp"
+        android:layout_width="352dp"
+        android:layout_height="156dp"
         android:layout_marginLeft="10dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintHorizontal_bias="0.271"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66" />
+        app:layout_constraintVertical_bias="0.606" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
         android:layout_width="107dp"
         android:layout_height="34dp"
         android:layout_marginTop="200dp"
@@ -64,10 +63,10 @@
         app:cardCornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.078"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.667">
+        app:layout_constraintVertical_bias="0.607">
 
         <TextView
             android:layout_width="match_parent"
@@ -79,34 +78,34 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerMOBA"
-        android:layout_width="355dp"
-        android:layout_height="160dp"
+        android:layout_width="352dp"
+        android:layout_height="156dp"
         android:layout_marginLeft="10dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintHorizontal_bias="0.271"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.972" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="216dp"
         android:layout_height="58dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="257dp"
         android:background="@drawable/game_bigtitle"
         android:gravity="center"
         android:text="Game"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerGACHA"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerGACHA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.917"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.122" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addGameToRate"
@@ -115,21 +114,21 @@
         android:src="@drawable/baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.983"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.961" />
+        app:layout_constraintVertical_bias="0.903" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.181"
+        app:layout_constraintVertical_bias="0.001"
         app:srcCompat="@drawable/game_logo" />
 
     <androidx.cardview.widget.CardView
@@ -143,7 +142,7 @@
         app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19">
+        app:layout_constraintVertical_bias="0.177">
 
         <TextView
             android:layout_width="match_parent"
