@@ -4,13 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/readnew_bg"
     tools:context=".ReadDetailsNews">
 
+
+    <ImageButton
+        android:id="@+id/backBtnDetails"
+        android:layout_width="88dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/white"
+        android:src="@drawable/readnew_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </ImageButton>
 
     <androidx.cardview.widget.CardView
         android:layout_width="125dp"
         android:layout_height="45dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="7dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.097"
@@ -22,66 +41,80 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textAlignment="center"
             android:text="NEWS"
+            android:textAlignment="center"
             android:textSize="20dp"
             app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/readnew_news"
             tools:layout_editor_absoluteX="67dp"></TextView>
 
     </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:id="@+id/imageViewDetails"
-        android:layout_width="409dp"
-        android:layout_height="154dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:scaleType="centerCrop"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="366dp"
+        android:layout_height="647dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/review_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115"
-        tools:srcCompat="@drawable/googleg_disabled_color_18" />
+        app:layout_constraintTop_toBottomOf="@+id/backBtnDetails">
 
+        <TextView
+            android:id="@+id/tileDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="141dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="140dp"
+            android:layout_marginBottom="5dp"
+            android:text="TextView"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/tileDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewDetails"
-        app:layout_constraintVertical_bias="0.033" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="345dp"
+            android:layout_height="161dp"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.085">
 
-    <ImageButton
-        android:id="@+id/backBtnDetails"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/white"
-        android:src="@drawable/baseline_arrow_back_24"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48"></ImageButton>
+            <ImageView
+                android:id="@+id/imageViewDetails"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@drawable/googleg_disabled_color_18" />
+        </androidx.cardview.widget.CardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewDetails"
-        android:layout_width="358dp"
-        android:layout_height="406dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tileDetails"
-        app:layout_constraintVertical_bias="0.919" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDetails"
+            android:layout_width="345dp"
+            android:layout_height="380dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.846"
+            app:layout_constraintStart_toStartOf="parent" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

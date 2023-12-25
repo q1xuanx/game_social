@@ -86,9 +86,9 @@ public class FragementNews extends Fragment implements RecyclerViewInterface {
         });
         autoScoll.registerLifecycle(getLifecycle());
         List<CarouselItem> listImg = new ArrayList<>();
-        listImg.add(new CarouselItem("https://cdn.tuoitre.vn/zoom/480_300/471584752817336320/2023/8/18/z460403153766270591260b9275f06f3198fd73b71bfc8-1692320194754518028680-0-0-775-1240-crop-16923201998441869011790.jpg"));
-        listImg.add(new CarouselItem("https://thietkegame.com/wp-content/uploads/2019/12/co-che-dieu-khien-trong-game.jpg"));
-        listImg.add(new CarouselItem("https://png.pngtree.com/thumb_back/fw800/background/20210910/pngtree-professional-gamer-playing-games-online-portrait-image_867022.jpg"));
+        listImg.add(new CarouselItem("https://assets-prd.ignimgs.com/2023/12/04/tga-1701711888611.png"));
+        listImg.add(new CarouselItem("https://pbs.twimg.com/media/F_G4oG3XoAAnIpx.jpg"));
+        listImg.add(new CarouselItem("https://i.ytimg.com/vi/Ae89jZYuDg4/maxresdefault.jpg"));
         autoScoll.setData(listImg);
         autoScoll.setAutoPlay(true);
 

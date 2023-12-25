@@ -37,9 +37,8 @@ import java.util.List;
 
 public class FragmentGame extends Fragment implements RecyclerViewInterface {
     RecyclerView recyclerMoba, recyclerFPS, recyclerGacha;
-    AdapterGame adapterGame;
     String typeGame = "GACHA";
-    FloatingActionButton button;
+    FloatingActionButton buttonAddGame;
     DatabaseReference databaseReference;
     List<Pair<String,Game>> listMoba, listFPS, listGacha;
 
@@ -94,8 +93,8 @@ public class FragmentGame extends Fragment implements RecyclerViewInterface {
 
             }
         });
-        button = v.findViewById(R.id.addGameToRate);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonAddGame = v.findViewById(R.id.addGameToRate);
+        buttonAddGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Dialog dialog = new Dialog(FragmentGame.this.getContext());

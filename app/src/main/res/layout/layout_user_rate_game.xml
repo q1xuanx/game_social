@@ -1,35 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/review_user"
     android:layout_height="wrap_content">
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="355dp"
+        android:layout_height="144dp">
 
         <TextView
             android:id="@+id/pointGet"
             android:layout_width="89dp"
-            android:layout_marginTop="0dp"
-            android:layout_height="74dp"></TextView>
+            android:layout_height="74dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/review_score"
+            android:gravity="center"
+            android:text="100"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/commentRateGame"
+            app:layout_constraintEnd_toStartOf="@+id/nameUserRate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
 
         <TextView
-            android:layout_marginTop="20dp"
             android:id="@+id/nameUserRate"
             android:layout_width="178dp"
             android:layout_height="74dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
             android:text="Name User"
-            android:textSize="20dp"></TextView>
-    </LinearLayout>
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/commentRateGame"
-        android:layout_width="268dp"
-        android:layout_height="80dp"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:text="Comment">
-    </TextView>
-</LinearLayout>
+            android:textAlignment="center"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/commentRateGame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pointGet"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:id="@+id/commentRateGame"
+            android:layout_width="292dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Comment"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pointGet"></TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
