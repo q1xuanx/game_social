@@ -65,7 +65,7 @@ public class ActivityRateGame extends AppCompatActivity {
                         if(comment.getText().toString().equals("")){
                             Toast.makeText(ActivityRateGame.this, "Vui lòng nhập ý kiến của bạn", Toast.LENGTH_SHORT);
                         }else {
-                            GameComment gm = new GameComment(MainActivity.userName, comment.getText().toString(), Integer.parseInt(String.valueOf(point.getProgress())));
+                            GameComment gm = new GameComment(MainActivity.user.getEmail(), comment.getText().toString(), Integer.parseInt(String.valueOf(point.getProgress())));
                             addItemRecyclerView(gm);
                             Toast.makeText(ActivityRateGame.this, "Cảm ơn bạn đã đánh giá", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
