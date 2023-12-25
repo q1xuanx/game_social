@@ -2,6 +2,7 @@ package com.example.nhom06_socialgamenetwork.models;
 
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -38,6 +39,7 @@ public class Game {
         this.gameType = typeGame;
         this.totalPoint = 0;
         this.rateTimes = 0;
+        this.list = new ArrayList<>();
     }
     public Game(String idPic, String nameGame, List<GameComment> list){
         this.idPic = idPic;
