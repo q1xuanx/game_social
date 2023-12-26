@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.example.nhom06_socialgamenetwork.models.User;
@@ -46,11 +47,17 @@ public class ActivityLogin extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
     public void showPassEvent(){
-        if(showPass.isChecked()){
-            pass.setTransformationMethod(null);
-        }else {
-            pass.setTransformationMethod(new PasswordTransformationMethod());
-        }
+        showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    pass.setTransformationMethod(null);
+                }else {
+                    pass.setTransformationMethod(new PasswordTransformationMethod());
+                }
+            }
+        });
+
     }
     public void signUpEvent(){
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
