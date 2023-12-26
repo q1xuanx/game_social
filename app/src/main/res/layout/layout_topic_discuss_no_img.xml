@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="20dp"
     android:layout_gravity="center"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="10dp"
     android:layout_height="wrap_content">
 
     <LinearLayout

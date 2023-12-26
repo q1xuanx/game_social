@@ -65,6 +65,7 @@ public class ActivityLogin extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ActivityLogin.this, ActivityRegister.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

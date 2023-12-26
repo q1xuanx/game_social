@@ -8,8 +8,8 @@ public class Discuss {
     private String title;
     private String idPic;
     private String details;
-    private List<Integer> like;
-    private List<Integer> dislike;
+    private List<String> like;
+    private List<String> dislike;
 
 
     public Discuss(){
@@ -57,19 +57,19 @@ public class Discuss {
     }
 
 
-    public List<Integer> getLike() {
+    public List<String> getLike() {
         return like;
     }
 
-    public void setLike(List<Integer> like) {
+    public void setLike(List<String> like) {
         this.like = like;
     }
 
-    public List<Integer> getDislike() {
+    public List<String> getDislike() {
         return dislike;
     }
 
-    public void setDislike(List<Integer> dislike) {
+    public void setDislike(List<String> dislike) {
         this.dislike = dislike;
     }
 }

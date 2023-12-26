@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nhom06_socialgamenetwork.models.Discuss;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -32,7 +33,7 @@ public class DiscussComment extends AppCompatActivity {
     AppCompatButton writeComment;
     String key;
     DatabaseReference databaseReference;
-    List<Integer> listLike, listDislike;
+    List<String> listLike, listDislike;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class DiscussComment extends AppCompatActivity {
         getData(getIntent());
         initItem();
         setContent();
+        likeEvent();
+        dislikeEvent();
     }
 
     public void getData(Intent intent){
@@ -52,8 +55,8 @@ public class DiscussComment extends AppCompatActivity {
         discuss.setTitle(bundle.getString("title"));
         discuss.setDetails(bundle.getString("details"));
         discuss.setNamePost(bundle.getString("username"));
-        discuss.setLike(bundle.getIntegerArrayList("like"));
-        discuss.setDislike(bundle.getIntegerArrayList("dislike"));
+        discuss.setLike(bundle.getStringArrayList("like"));
+        discuss.setDislike(bundle.getStringArrayList("dislike"));
         key = bundle.getString("key");
     }
     public void initItem(){
@@ -92,7 +95,63 @@ public class DiscussComment extends AppCompatActivity {
         like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                DatabaseReference dbedit = databaseReference.child("discuss").child(key);
+                if (discuss.getDislike().indexOf(MainActivity.user.getEmail()) != -1){
+                    int indexDislike = discuss.getDislike().indexOf(MainActivity.user.getEmail());
+                    discuss.getDislike().remove(indexDislike);
+                    int indexLike = discuss.getLike().indexOf(MainActivity.user.getEmail());
+                    if (indexLike != -1){
+                        discuss.getLike().remove(indexLike);
+                    }else {
+                        discuss.getLike().add(MainActivity.user.getEmail());
+                    }
+                }else {
+                    int indexLike = discuss.getLike().indexOf(MainActivity.user.getEmail());
+                    if (indexLike != -1){
+                        discuss.getLike().remove(indexLike);
+                    }else {
+                        discuss.getLike().add(MainActivity.user.getEmail());
+                    }
+                }
+                dbedit.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        totalLike.setText(String.valueOf(discuss.getLike().size()));
+                        totalDislike.setText(String.valueOf(discuss.getDislike().size()));
+                    }
+                });
+            }
+        });
+    }
+    public void dislikeEvent(){
+        dislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference dbedit = databaseReference.child("discuss").child(key);
+                if (discuss.getLike().indexOf(MainActivity.user.getEmail()) != -1){
+                    int indexLike = discuss.getLike().indexOf(MainActivity.user.getEmail());
+                    discuss.getLike().remove(indexLike);
+                    int indexDislike = discuss.getDislike().indexOf(MainActivity.user.getEmail());
+                    if (indexDislike != -1){
+                        discuss.getDislike().remove(indexLike);
+                    }else {
+                        discuss.getDislike().add(MainActivity.user.getEmail());
+                    }
+                }else {
+                    int indexDislike = discuss.getDislike().indexOf(MainActivity.user.getEmail());
+                    if (indexDislike != -1){
+                        discuss.getDislike().remove(indexDislike);
+                    }else {
+                        discuss.getDislike().add(MainActivity.user.getEmail());
+                    }
+                }
+                dbedit.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        totalLike.setText(String.valueOf(discuss.getLike().size()));
+                        totalDislike.setText(String.valueOf(discuss.getDislike().size()));
+                    }
+                });
             }
         });
     }
