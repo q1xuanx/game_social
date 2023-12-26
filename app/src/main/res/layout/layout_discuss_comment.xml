@@ -23,22 +23,25 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/nameUserPost"
+                android:layout_width="345dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Name"
                 android:textSize="20dp"></TextView>
 
             <TextView
+                android:id="@+id/titlePost"
                 android:layout_width="274dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Title"
-                android:textSize="15dp"></TextView>
+                android:textSize="17dp"></TextView>
 
             <ImageView
+                android:id="@+id/imageTopic"
                 android:layout_width="337dp"
                 android:layout_height="137dp"
                 android:layout_gravity="center"></ImageView>
@@ -49,6 +52,7 @@
                 android:layout_marginLeft="10dp">
 
                 <TextView
+                    android:id="@+id/detailsTopic"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLines="3"></TextView>

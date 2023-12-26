@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class FragmentDiscuss extends Fragment {
     ImageView imgViewTopic;
     StorageReference firebaseStorage;
     DatabaseReference databaseReference;
-    List<Discuss> list;
+    List<Pair<String,Discuss>> list;
     AdapterDiscuss adapterDiscuss;
     @Nullable
     @Override
@@ -104,7 +105,7 @@ public class FragmentDiscuss extends Fragment {
                             Toast.makeText(FragmentDiscuss.this.getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                         }else {
                             discuss.setDetails(details.getText().toString());
-                            discuss.setTitle(details.getText().toString());
+                            discuss.setTitle(title.getText().toString());
                             discuss.setNamePost(MainActivity.user.getEmail());
                             // Neu ko co hinh anh duoc them
                             if (discuss.getIdPic() == null){
@@ -170,9 +171,9 @@ public class FragmentDiscuss extends Fragment {
                 list.clear();
                 for(DataSnapshot snapshot1 : snapshot.getChildren()){
                     Discuss discuss1 = snapshot1.getValue(Discuss.class);
-                    list.add(discuss1);
+                    list.add(new Pair<>(snapshot1.getKey(), discuss1));
                 }
-                adapterDiscuss = new AdapterDiscuss(list);
+                adapterDiscuss = new AdapterDiscuss(list,FragmentDiscuss.this.getContext());
                 recyclerView.setAdapter(adapterDiscuss);
                 recyclerView.setLayoutManager(new LinearLayoutManager(FragmentDiscuss.this.getContext()));
             }
