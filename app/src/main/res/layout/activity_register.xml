@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     tools:context=".ActivityRegister">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
         android:layout_width="288dp"
         android:layout_height="63dp"
+        android:layout_marginTop="170dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -29,6 +31,7 @@
         android:id="@+id/textInputLayout3"
         android:layout_width="288dp"
         android:layout_height="63dp"
+        android:layout_marginTop="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -48,6 +51,7 @@
         android:id="@+id/textInputLayout2"
         android:layout_width="288dp"
         android:layout_height="63dp"
+        android:layout_marginTop="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -66,6 +70,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="288dp"
         android:layout_height="63dp"
+        android:layout_marginTop="190dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -83,7 +88,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signUp"
-        android:layout_width="277dp"
+        android:layout_width="303dp"
         android:layout_height="60dp"
         android:layout_marginTop="496dp"
         android:background="@drawable/border_add"
@@ -93,7 +98,7 @@
         app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.697">
 
     </androidx.appcompat.widget.AppCompatButton>
 
@@ -101,7 +106,27 @@
         android:id="@+id/alreadyHaveAcc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="258dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="70dp"
         android:text="Đã có tài khoản?"
-        tools:layout_editor_absoluteX="257dp"
-        tools:layout_editor_absoluteY="407dp"></TextView>
+        app:layout_constraintBottom_toTopOf="@+id/signUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        app:layout_constraintVertical_bias="1.0"></TextView>
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="288dp"
+        android:layout_height="251dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/login_logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
