@@ -11,6 +11,7 @@ public class Discuss {
     private List<String> like;
     private List<String> dislike;
 
+    private List<CommentDiscuss> comment;
 
     public Discuss(){
 
@@ -22,6 +23,7 @@ public class Discuss {
         this.details = details;
         this.like = new ArrayList<>();
         this.dislike = new ArrayList<>();
+        this.comment = new ArrayList<>();
     }
 
     public String getNamePost() {
@@ -71,5 +73,13 @@ public class Discuss {
 
     public void setDislike(List<String> dislike) {
         this.dislike = dislike;
+    }
+
+    public List<CommentDiscuss> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<CommentDiscuss> comment) {
+        this.comment = comment;
     }
 }

@@ -57,6 +57,7 @@ public class ActivityRateGame extends AppCompatActivity {
             public void onClick(View view) {
                 Dialog dialog = new Dialog(ActivityRateGame.this);
                 dialog.setContentView(R.layout.dialog_rate_game);
+                dialog.setCancelable(false);
                 dialog.getWindow().setAttributes(changeSizeOfDialog(dialog));
                 SeekBar point = dialog.findViewById(R.id.seekBar2);
                 EditText comment = dialog.findViewById(R.id.rateUser);
@@ -188,9 +189,5 @@ public class ActivityRateGame extends AppCompatActivity {
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         return layoutParams;
-    }
-    // Them comment vao recycler view;
-    public void addItemRecyclerView(GameComment gameComment){
-        adapterUserRateGame.addComment(gameComment);
     }
 }
