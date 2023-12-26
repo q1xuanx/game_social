@@ -168,6 +168,9 @@ public class ActivityRegister extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void unused) {
                                             Toast.makeText(ActivityRegister.this, "Đăng ký thành công, vui lòng kiểm tra email", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(ActivityRegister.this, ActivityLogin.class);
+                                            startActivity(intent);
+                                            finish();
                                             setAllDefault();
                                         }
                                     });

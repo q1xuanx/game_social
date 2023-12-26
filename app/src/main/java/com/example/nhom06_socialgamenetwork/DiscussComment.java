@@ -153,7 +153,7 @@ public class DiscussComment extends AppCompatActivity {
                 if (snapshot.exists()){
                     for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                         DatabaseReference dbedit = databaseReference.child("user").child(snapshot1.getKey());
-                        User user = snapshot.getValue(User.class);
+                        User user = snapshot1.getValue(User.class);
                         if (Integer.parseInt(totalLike.getText().toString()) % 5 == 0) {
                             int likeTotal = Integer.parseInt(totalLike.getText().toString());
                             user.setReputation(likeTotal / 5);
