@@ -52,11 +52,11 @@
         android:id="@+id/postTopic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/baseline_add_card_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintHorizontal_bias="0.929"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/baseline_add_card_24"
-        app:layout_constraintVertical_bias="0.802"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+        app:layout_constraintVertical_bias="0.937"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 </androidx.constraintlayout.widget.ConstraintLayout>
