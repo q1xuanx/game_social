@@ -55,8 +55,8 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View view) {
                     Intent intent = new Intent(context,DiscussComment.class);
                     Bundle bundle = new Bundle();
-                    bundle.putIntegerArrayList("like", (ArrayList<Integer>) list.get(holder.getBindingAdapterPosition()).second.getLike());
-                    bundle.putIntegerArrayList("dislike", (ArrayList<Integer>) list.get(holder.getBindingAdapterPosition()).second.getDislike());
+                    bundle.putStringArrayList("like", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getLike());
+                    bundle.putStringArrayList("dislike", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getDislike());
                     bundle.putString("key", list.get(holder.getBindingAdapterPosition()).first);
                     bundle.putString("title",list.get(holder.getBindingAdapterPosition()).second.getTitle());
                     bundle.putString("username", MainActivity.user.getEmail());
@@ -76,8 +76,8 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View view) {
                     Intent intent = new Intent(context,DiscussComment.class);
                     Bundle bundle = new Bundle();
-                    bundle.putIntegerArrayList("like", (ArrayList<Integer>) list.get(holder.getBindingAdapterPosition()).second.getLike());
-                    bundle.putIntegerArrayList("dislike", (ArrayList<Integer>) list.get(holder.getBindingAdapterPosition()).second.getDislike());
+                    bundle.putStringArrayList("like", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getLike());
+                    bundle.putStringArrayList("dislike", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getDislike());
                     bundle.putString("key", list.get(holder.getBindingAdapterPosition()).first);
                     bundle.putString("title",list.get(holder.getBindingAdapterPosition()).second.getTitle());
                     bundle.putString("username", MainActivity.user.getEmail());

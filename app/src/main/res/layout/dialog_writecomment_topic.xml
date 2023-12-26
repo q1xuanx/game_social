@@ -36,7 +36,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/rateUser"
+                android:id="@+id/comment"
                 android:layout_width="293dp"
                 android:layout_height="96dp"
                 android:layout_gravity="center"
@@ -45,7 +45,7 @@
                 android:hint="Viết bình luận"></EditText>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/addRateGame"
+                android:id="@+id/postComment"
                 android:layout_width="227dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

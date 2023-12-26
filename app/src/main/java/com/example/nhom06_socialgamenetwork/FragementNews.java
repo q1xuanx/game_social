@@ -156,7 +156,6 @@ public class FragementNews extends Fragment implements RecyclerViewInterface {
     public void onItemClick(int postion) {
         Intent intent = new Intent(FragementNews.this.getContext(), ReadDetailsNews.class);
         databaseReference = databaseReference.child("post").child(list.get(postion).first);
-        Toast.makeText(FragementNews.this.getContext(), list.get(postion).first, Toast.LENGTH_SHORT).show();
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
