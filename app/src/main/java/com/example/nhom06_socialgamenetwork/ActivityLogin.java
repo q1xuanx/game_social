@@ -6,9 +6,12 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.example.nhom06_socialgamenetwork.models.User;
@@ -20,14 +23,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Type;
-
 public class ActivityLogin extends AppCompatActivity {
 
     AppCompatButton buttonLogin, buttonSignUp;
     TextInputEditText email, pass;
     CheckBox showPass;
     DatabaseReference databaseReference;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,15 +45,24 @@ public class ActivityLogin extends AppCompatActivity {
         buttonSignUp = findViewById(R.id.signUpButton);
         email = findViewById(R.id.inputEmail);
         pass = findViewById(R.id.inputPassword);
-        showPass = findViewById(R.id.checkBoxShowPass);
+        showPass = findViewById(R.id.showPass);
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
     public void showPassEvent(){
-        if(showPass.isChecked()){
+        /*if(showPass.isChecked()){
             pass.setTransformationMethod(null);
         }else {
             pass.setTransformationMethod(new PasswordTransformationMethod());
-        }
+        }*/
+        showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                int inputType = b ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD : InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                pass.setInputType(inputType);
+
+                pass.setSelection(pass.getText().length());
+            }
+        });
     }
     public void signUpEvent(){
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
