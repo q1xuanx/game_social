@@ -9,9 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nhom06_socialgamenetwork.R;
+import com.example.nhom06_socialgamenetwork.models.CommentDiscuss;
+
+import java.util.List;
 
 public class AdapterDiscussComment extends RecyclerView.Adapter<AdapterDiscussComment.HolderItem>{
 
+    List<CommentDiscuss> list;
+    public AdapterDiscussComment(List<CommentDiscuss> list){
+        this.list = list;
+    }
     @NonNull
     @Override
     public HolderItem onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -21,12 +28,14 @@ public class AdapterDiscussComment extends RecyclerView.Adapter<AdapterDiscussCo
 
     @Override
     public void onBindViewHolder(@NonNull HolderItem holder, int position) {
-
+        CommentDiscuss cd = list.get(position);
+        holder.comment.setText(cd.getComment());
+        holder.nameUser.setText(cd.getNameUser());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     static class HolderItem extends RecyclerView.ViewHolder{

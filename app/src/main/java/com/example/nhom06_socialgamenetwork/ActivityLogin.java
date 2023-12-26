@@ -93,6 +93,7 @@ public class ActivityLogin extends AppCompatActivity {
                                 intent.putExtra("isAdmin", user.getIsAdmin());
                                 intent.putExtra("reputation", user.getReputation());
                                 startActivity(intent);
+                                finish();
                                 Toast.makeText(ActivityLogin.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             }else {
                                 Toast.makeText(ActivityLogin.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
