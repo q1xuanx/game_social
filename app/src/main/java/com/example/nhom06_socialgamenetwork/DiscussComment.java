@@ -103,7 +103,7 @@ public class DiscussComment extends AppCompatActivity {
                     }else {
                         discuss.setComment(discuss1.getComment());
                     }
-                    discussComments = discuss1.getComment();
+                    discussComments = discuss.getComment();
                     AdapterDiscussComment adc = new AdapterDiscussComment(discussComments);
                     listComment.setAdapter(adc);
                     listComment.setLayoutManager(new LinearLayoutManager(DiscussComment.this));

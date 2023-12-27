@@ -59,7 +59,7 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     bundle.putStringArrayList("dislike", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getDislike());
                     bundle.putString("key", list.get(holder.getBindingAdapterPosition()).first);
                     bundle.putString("title",list.get(holder.getBindingAdapterPosition()).second.getTitle());
-                    bundle.putString("username", MainActivity.user.getEmail());
+                    bundle.putString("username", list.get(holder.getBindingAdapterPosition()).second.getNamePost());
                     bundle.putString("details", list.get(holder.getBindingAdapterPosition()).second.getDetails());
                     bundle.putString("idPic", "khong co hinh");
                     intent.putExtras(bundle);
@@ -80,7 +80,7 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     bundle.putStringArrayList("dislike", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getDislike());
                     bundle.putString("key", list.get(holder.getBindingAdapterPosition()).first);
                     bundle.putString("title",list.get(holder.getBindingAdapterPosition()).second.getTitle());
-                    bundle.putString("username", MainActivity.user.getEmail());
+                    bundle.putString("username", list.get(holder.getBindingAdapterPosition()).second.getNamePost());
                     bundle.putString("details", list.get(holder.getBindingAdapterPosition()).second.getDetails());
                     bundle.putString("idPic", discuss.getIdPic());
                     intent.putExtras(bundle);
