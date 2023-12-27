@@ -8,9 +8,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        app:cardBackgroundColor="#D1B0FF"
         android:layout_width="366dp"
         android:layout_height="283dp"
+        app:cardBackgroundColor="#D1B0FF"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,115 +86,58 @@
         app:layout_constraintTop_toBottomOf="@+id/writeCommentTopic"
         app:layout_constraintVertical_bias="0.578" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/likeframe"
-        android:layout_width="119dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/discusspost_likebg"
-        app:layout_constraintBottom_toTopOf="@+id/writeCommentTopic"
-        app:layout_constraintEnd_toStartOf="@+id/dislikeframe"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-        <Button
-            android:id="@+id/buttonLike"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/totalLike"
-            android:layout_width="64dp"
-            android:layout_height="53dp"
-            android:gravity="center"
-            android:text="0"
-            android:textAlignment="center"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.777"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.272"></TextView>
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="50dp"
-            android:layout_height="52dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/totalLike"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/discusspost_likeicon" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dislikeframe"
-        android:layout_width="119dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="11dp"
-        android:background="@drawable/discusspost_dislikebg"
-        app:layout_constraintBottom_toTopOf="@+id/writeCommentTopic"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLike"
+        android:layout_width="54dp"
+        android:layout_height="46dp"
+        android:background="@drawable/button_like"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/likeframe"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+        app:layout_constraintHorizontal_bias="0.372"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.448" />
 
-        <Button
-            android:id="@+id/buttonDislike"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/totalLike"
+        android:layout_width="54dp"
+        android:layout_height="41dp"
+        android:gravity="center"
+        android:text="0"
+        android:textAlignment="center"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444"></TextView>
 
-        <TextView
-            android:id="@+id/totalDislike"
-            android:layout_width="64dp"
-            android:layout_height="53dp"
-            android:gravity="center"
-            android:text="0"
-            android:textAlignment="center"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.777"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.272">
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonDislike"
+        android:layout_width="54dp"
+        android:layout_height="46dp"
+        android:background="@drawable/button_dislike"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.784"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.448" />
 
-        </TextView>
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="50dp"
-            android:layout_height="52dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/discusspost_dislikeicon" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <TextView
+        android:id="@+id/totalDislike"
+        android:layout_width="54dp"
+        android:layout_height="41dp"
+        android:gravity="center"
+        android:text="0"
+        android:textAlignment="center"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.452"></TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>
