@@ -40,7 +40,7 @@ public class DiscussComment extends AppCompatActivity {
     Discuss discuss;
     TextView username, title, details, totalLike, totalDislike;
     ImageView imgView;
-    ImageButton like, dislike;
+    Button like, dislike;
     RecyclerView listComment;
     AppCompatButton writeComment;
     String key;
