@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        app:cardBackgroundColor="#D1B0FF"
+        app:cardBackgroundColor="#E4D1FF"
         android:layout_width="366dp"
         android:layout_height="283dp"
         app:cardCornerRadius="20dp"
@@ -90,15 +90,12 @@
         android:id="@+id/likeframe"
         android:layout_width="119dp"
         android:layout_height="66dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/discusspost_likebg"
-        app:layout_constraintBottom_toTopOf="@+id/writeCommentTopic"
-        app:layout_constraintEnd_toStartOf="@+id/dislikeframe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/buttonLike"
@@ -145,15 +142,13 @@
         android:id="@+id/dislikeframe"
         android:layout_width="119dp"
         android:layout_height="66dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/discusspost_dislikebg"
-        app:layout_constraintBottom_toTopOf="@+id/writeCommentTopic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/likeframe"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/buttonDislike"
@@ -163,7 +158,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/totalDislike"
