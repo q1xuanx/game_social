@@ -8,20 +8,20 @@
         android:id="@+id/rankNumber"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:text="1"></TextView>
 
     <TextView
         android:id="@+id/nameUserRank"
-        android:layout_width="159dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:text="Name"
-        android:textSize="20dp"></TextView>
+        android:textSize="18dp"></TextView>
 
     <TextView
         android:id="@+id/reputation"
         android:layout_width="54dp"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:text="100"></TextView>
 </LinearLayout>
