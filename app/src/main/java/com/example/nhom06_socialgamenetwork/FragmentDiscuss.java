@@ -46,6 +46,7 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class FragmentDiscuss extends Fragment {
@@ -107,6 +108,7 @@ public class FragmentDiscuss extends Fragment {
                             discuss.setDetails(details.getText().toString());
                             discuss.setTitle(title.getText().toString());
                             discuss.setNamePost(MainActivity.user.getEmail());
+                            discuss.setDatePost(String.valueOf( Calendar.getInstance().getTime()));
                             // Neu ko co hinh anh duoc them
                             if (discuss.getIdPic() == null){
                                 DatabaseReference dbAdd = databaseReference.child("discuss").push();

@@ -50,18 +50,14 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
             HolderNotImage holderNotImage = (HolderNotImage) holder;
             holderNotImage.title.setText(discuss.getTitle());
             holderNotImage.username.setText(discuss.getNamePost());
+            holderNotImage.timepost.setText(discuss.getDatePost());
             holderNotImage.clickToDiscuss.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context,DiscussComment.class);
                     Bundle bundle = new Bundle();
-                    bundle.putStringArrayList("like", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getLike());
-                    bundle.putStringArrayList("dislike", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getDislike());
+                    bundle.putParcelable("discuss", discuss);
                     bundle.putString("key", list.get(holder.getBindingAdapterPosition()).first);
-                    bundle.putString("title",list.get(holder.getBindingAdapterPosition()).second.getTitle());
-                    bundle.putString("username", list.get(holder.getBindingAdapterPosition()).second.getNamePost());
-                    bundle.putString("details", list.get(holder.getBindingAdapterPosition()).second.getDetails());
-                    bundle.putString("idPic", "khong co hinh");
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 }
@@ -70,19 +66,15 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
             HolderImage holderImage = (HolderImage) holder;
             holderImage.title.setText(discuss.getTitle());
             holderImage.username.setText(discuss.getNamePost());
+            holderImage.timepost.setText(discuss.getDatePost());
             Picasso.get().load(Uri.parse(discuss.getIdPic())).into(holderImage.imgPic);
             holderImage.clickToDiscuss.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context,DiscussComment.class);
                     Bundle bundle = new Bundle();
-                    bundle.putStringArrayList("like", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getLike());
-                    bundle.putStringArrayList("dislike", (ArrayList<String>) list.get(holder.getBindingAdapterPosition()).second.getDislike());
+                    bundle.putParcelable("discuss", discuss);
                     bundle.putString("key", list.get(holder.getBindingAdapterPosition()).first);
-                    bundle.putString("title",list.get(holder.getBindingAdapterPosition()).second.getTitle());
-                    bundle.putString("username", list.get(holder.getBindingAdapterPosition()).second.getNamePost());
-                    bundle.putString("details", list.get(holder.getBindingAdapterPosition()).second.getDetails());
-                    bundle.putString("idPic", discuss.getIdPic());
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 }
@@ -103,7 +95,7 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public static class HolderImage extends RecyclerView.ViewHolder{
-        TextView username, title, clickToDiscuss;
+        TextView username, title, clickToDiscuss, timepost;
         ImageView imgPic;
         public HolderImage(@NonNull View itemView) {
             super(itemView);
@@ -111,15 +103,17 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
             title = itemView.findViewById(R.id.titlePost);
             imgPic = itemView.findViewById(R.id.imageTopic);
             clickToDiscuss = itemView.findViewById(R.id.clickToDiscuss);
+            timepost = itemView.findViewById(R.id.timePost);
         }
     }
     public static class HolderNotImage extends RecyclerView.ViewHolder{
-        TextView title, username, clickToDiscuss;
+        TextView title, username, clickToDiscuss, timepost;
         public HolderNotImage(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.titlePostNoImg);
             username = itemView.findViewById(R.id.userNamePostNoImg);
             clickToDiscuss = itemView.findViewById(R.id.clickToDiscussNoImg);
+            timepost = itemView.findViewById(R.id.timePostNotImg);
         }
     }
 }

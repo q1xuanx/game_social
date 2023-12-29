@@ -40,14 +40,13 @@
         android:layout_height="70dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/login_input"
         android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.537">
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputEmail"
@@ -67,16 +66,14 @@
         android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="11dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="66dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/login_input"
         android:padding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/appCompatButtonLogin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.222"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputPassword"
@@ -94,7 +91,7 @@
         android:id="@+id/checkBoxShowPass"
         android:layout_width="158dp"
         android:layout_height="34dp"
-        android:layout_marginBottom="176dp"
+        android:layout_marginBottom="180dp"
         android:text="Show Password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

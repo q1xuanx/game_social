@@ -24,6 +24,7 @@ import com.example.nhom06_socialgamenetwork.models.CommentDiscuss;
 import com.example.nhom06_socialgamenetwork.models.Discuss;
 import com.example.nhom06_socialgamenetwork.models.User;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +48,7 @@ public class DiscussComment extends AppCompatActivity {
     DatabaseReference databaseReference;
     List<String> listLike, listDislike;
     List<CommentDiscuss> discussComments;
+    FloatingActionButton btnClose;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,19 +62,12 @@ public class DiscussComment extends AppCompatActivity {
         likeEvent();
         dislikeEvent();
         writeCommentEvent();
-        addRep();
+        closeTopicEvent();
     }
 
     public void getData(Intent intent) {
         Bundle bundle = intent.getExtras();
-        if (!bundle.getString("idPic").equals("khong co hinh")) {
-            discuss.setIdPic(bundle.getString("idPic"));
-        }
-        discuss.setTitle(bundle.getString("title"));
-        discuss.setDetails(bundle.getString("details"));
-        discuss.setNamePost(bundle.getString("username"));
-        discuss.setLike(bundle.getStringArrayList("like"));
-        discuss.setDislike(bundle.getStringArrayList("dislike"));
+        discuss = bundle.getParcelable("discuss");
         key = bundle.getString("key");
     }
 
@@ -87,7 +82,11 @@ public class DiscussComment extends AppCompatActivity {
         totalDislike = findViewById(R.id.totalDislike);
         writeComment = findViewById(R.id.writeCommentTopic);
         listComment = findViewById(R.id.listComment);
+        btnClose = findViewById(R.id.closeTopic);
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        if (discuss.getNamePost().equals(MainActivity.user.getEmail())) {
+            btnClose.setVisibility(View.VISIBLE);
+        }
         initComment();
     }
 
@@ -98,13 +97,14 @@ public class DiscussComment extends AppCompatActivity {
                 discussComments.clear();
                 if (snapshot.exists()) {
                     Discuss discuss1 = snapshot.getValue(Discuss.class);
-                    if(discuss1.getComment() == null){
+                    if (discuss1.getComment() == null) {
                         discuss.setComment(discussComments);
-                    }else {
+                    } else {
                         discuss.setComment(discuss1.getComment());
                     }
                     discussComments = discuss.getComment();
                     AdapterDiscussComment adc = new AdapterDiscussComment(discussComments);
+                    discuss.setIsClosed(discuss1.getIsClosed());
                     listComment.setAdapter(adc);
                     listComment.setLayoutManager(new LinearLayoutManager(DiscussComment.this));
                     totalLike.setText(String.valueOf(discuss.getLike().size()));
@@ -134,7 +134,7 @@ public class DiscussComment extends AppCompatActivity {
         if (discuss.getComment() == null) {
             discussComments = new ArrayList<>();
             discuss.setComment(discussComments);
-        }else {
+        } else {
             discussComments = discuss.getComment();
         }
         totalLike.setText(String.valueOf(discuss.getLike().size()));
@@ -145,12 +145,13 @@ public class DiscussComment extends AppCompatActivity {
             Picasso.get().load(R.drawable.game_logo).into(imgView);
         }
     }
-    public void addRep(){
+
+    public void addRep() {
         Query dbcheck = FirebaseDatabase.getInstance().getReference("user").orderByChild("email").equalTo(discuss.getNamePost());
         dbcheck.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                         DatabaseReference dbedit = databaseReference.child("user").child(snapshot1.getKey());
                         User user = snapshot1.getValue(User.class);
@@ -158,7 +159,7 @@ public class DiscussComment extends AppCompatActivity {
                             int likeTotal = Integer.parseInt(totalLike.getText().toString());
                             user.setReputation(likeTotal / 5);
                         }
-                        if (Integer.parseInt(totalDislike.getText().toString()) % 5 == 0){
+                        if (Integer.parseInt(totalDislike.getText().toString()) % 5 == 0) {
                             int dislikeTotal = Integer.parseInt(totalDislike.getText().toString());
                             user.setReputation(user.getReputation() - (dislikeTotal / 5));
                         }
@@ -173,6 +174,7 @@ public class DiscussComment extends AppCompatActivity {
             }
         });
     }
+
     public void likeEvent() {
         like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,6 +198,7 @@ public class DiscussComment extends AppCompatActivity {
                     }
                 }
                 dbedit.setValue(discuss);
+                addRep();
             }
         });
     }
@@ -223,6 +226,7 @@ public class DiscussComment extends AppCompatActivity {
                     }
                 }
                 dbedit.setValue(discuss);
+                addRep();
             }
         });
     }
@@ -254,8 +258,34 @@ public class DiscussComment extends AppCompatActivity {
                         }
                     }
                 });
-                dialog.show();
+                if (discuss.getIsClosed() == 1) {
+                    Toast.makeText(DiscussComment.this, "Topic này đã bị tác giả đóng", Toast.LENGTH_SHORT).show();
+                } else {
+                    dialog.show();
+                }
             }
         });
+    }
+
+    public void closeTopicEvent() {
+        if (discuss.getNamePost().equals(MainActivity.user.getEmail()) || MainActivity.user.getIsAdmin() == 1) {
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DatabaseReference dataEdit = databaseReference.child("discuss").child(key);
+                    if (discuss.getIsClosed() == 0) {
+                        discuss.setIsClosed(1);
+                    } else {
+                        discuss.setIsClosed(0);
+                    }
+                    dataEdit.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(DiscussComment.this, "Đã chỉnh sửa topic ", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        }
     }
 }

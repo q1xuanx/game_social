@@ -25,6 +25,8 @@ import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class FragmentLeaderBoard extends Fragment {
@@ -63,6 +65,13 @@ public class FragmentLeaderBoard extends Fragment {
                     for (DataSnapshot snapshot1 : snapshot.getChildren()){
                         User user = snapshot1.getValue(User.class);
                         list.add(user);
+                    }
+                    for (int i = 0; i < list.size()-1; i++){
+                        for (int j = i + 1; j < list.size(); j++){
+                            if (list.get(i).getReputation() < list.get(j).getReputation()){
+                                Collections.swap(list,i,j);
+                            }
+                        }
                     }
                     AdapterLeaderBoard adapterLeaderBoard = new AdapterLeaderBoard(list);
                     recyclerView.setAdapter(adapterLeaderBoard);

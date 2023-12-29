@@ -1,17 +1,25 @@
 package com.example.nhom06_socialgamenetwork.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class Discuss {
+public class Discuss implements Parcelable{
     private String namePost;
     private String title;
     private String idPic;
     private String details;
     private List<String> like;
     private List<String> dislike;
+    private String datePost;
 
     private List<CommentDiscuss> comment;
+    private int isClosed = 0;
 
     public Discuss(){
 
@@ -24,7 +32,31 @@ public class Discuss {
         this.like = new ArrayList<>();
         this.dislike = new ArrayList<>();
         this.comment = new ArrayList<>();
+        this.isClosed = 0;
     }
+
+    protected Discuss(Parcel in) {
+        namePost = in.readString();
+        title = in.readString();
+        idPic = in.readString();
+        details = in.readString();
+        like = in.createStringArrayList();
+        dislike = in.createStringArrayList();
+        datePost = in.readString();
+        isClosed = in.readInt();
+    }
+
+    public static final Creator<Discuss> CREATOR = new Creator<Discuss>() {
+        @Override
+        public Discuss createFromParcel(Parcel in) {
+            return new Discuss(in);
+        }
+
+        @Override
+        public Discuss[] newArray(int size) {
+            return new Discuss[size];
+        }
+    };
 
     public String getNamePost() {
         return namePost;
@@ -81,5 +113,38 @@ public class Discuss {
 
     public void setComment(List<CommentDiscuss> comment) {
         this.comment = comment;
+    }
+
+    public int getIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(int isClosed) {
+        this.isClosed = isClosed;
+    }
+
+    public String getDatePost() {
+        return datePost;
+    }
+
+    public void setDatePost(String datePost) {
+        this.datePost = datePost;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(namePost);
+        parcel.writeString(title);
+        parcel.writeString(idPic);
+        parcel.writeString(details);
+        parcel.writeStringList(like);
+        parcel.writeStringList(dislike);
+        parcel.writeString(datePost);
+        parcel.writeInt(isClosed);
     }
 }
