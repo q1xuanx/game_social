@@ -1,6 +1,9 @@
 package com.example.nhom06_socialgamenetwork;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +36,7 @@ public class FragmentProfile extends Fragment {
         initItem(v);
         setData();
         logoutEvent();
+        setGradientColor();
         return v;
     }
 
@@ -56,5 +60,21 @@ public class FragmentProfile extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+    private void setGradientColor() {
+        int startColor = Color.parseColor("#33ccff");
+        int middleColor = Color.parseColor("#ff9999");
+        int endColor = Color.parseColor("#ff3366");
+
+        TextView[] textViews = {fullName, userName, rep};
+
+        for (TextView textView : textViews) {
+            int[] colors = {startColor, middleColor, endColor};
+            float[] positions = {0f, 0.5f, 1f};
+
+            Shader textShader = new LinearGradient(0, 0, textView.getPaint().measureText(textView.getText().toString()), textView.getTextSize(),
+                    colors, positions, Shader.TileMode.CLAMP);
+            textView.getPaint().setShader(textShader);
+        }
     }
 }

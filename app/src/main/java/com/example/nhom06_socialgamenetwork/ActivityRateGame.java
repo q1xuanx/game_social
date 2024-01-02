@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +53,7 @@ public class ActivityRateGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate_game);
         init();
+        setGradientColor();
 
         // Button đánh giá game
         writeRate.setOnClickListener(new View.OnClickListener() {
@@ -189,5 +193,32 @@ public class ActivityRateGame extends AppCompatActivity {
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         return layoutParams;
+    }
+    private void setGradientColor() {
+        int startColor1 = Color.parseColor("#CC00FF");
+        int endColor1 = Color.parseColor("#3366CC");
+
+        int startColor2 = Color.parseColor("#3366CC");
+        int endColor2 = Color.parseColor("#CC00FF");
+
+
+        TextView[] textViews = {gameName};
+
+        for (TextView textView : textViews) {
+            int[] colors1 = {startColor1, endColor1};
+            int[] colors2 = {startColor2, endColor2};
+            float[] positions = {0f,1f};
+            float[] positions2 = {0.9f,1f};
+            if (textView.getText().toString().split(" ").length <= 10) {
+                Shader textShader = new LinearGradient(0, 0, textView.getPaint().measureText(textView.getText().toString()), textView.getTextSize(),
+                        colors2, positions2, Shader.TileMode.CLAMP);
+                textView.getPaint().setShader(textShader);
+            }
+            else{
+                Shader textShader = new LinearGradient(0, 0, textView.getPaint().measureText(textView.getText().toString()), textView.getTextSize(),
+                        colors1, positions, Shader.TileMode.CLAMP);
+                textView.getPaint().setShader(textShader);
+            }
+        }
     }
 }
