@@ -57,6 +57,8 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder> {
             Uri uri = Uri.parse(news.getIdPic());
             Picasso.get().load(uri).into(holder.img);
             holder.title.setText(news.getTitle().toString());
+            holder.timePost.setText(news.getTimePost());
+            holder.totalViews.setText(holder.totalViews.getText().toString()+news.getViews());
         }
     }
 
@@ -67,13 +69,15 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title;
+        TextView title, timePost, totalViews;
         ImageView img;
 
         public ViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             title = itemView.findViewById(R.id.news_title);
             img = itemView.findViewById(R.id.news_img);
+            timePost = itemView.findViewById(R.id.timePostNews);
+            totalViews = itemView.findViewById(R.id.views);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -1,8 +1,13 @@
 package com.example.nhom06_socialgamenetwork.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
-public class News {
+public class News implements Parcelable {
     private String idPic;
     private List<String> picNews;
     private String title;
@@ -13,6 +18,27 @@ public class News {
     public News(){
 
     }
+
+    protected News(Parcel in) {
+        idPic = in.readString();
+        picNews = in.createStringArrayList();
+        title = in.readString();
+        timePost = in.readString();
+        Views = in.readInt();
+        isDelete = in.readInt();
+    }
+
+    public static final Creator<News> CREATOR = new Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel in) {
+            return new News(in);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 
     public int getIsDelete() {
         return isDelete;
@@ -83,4 +109,18 @@ public class News {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(idPic);
+        parcel.writeStringList(picNews);
+        parcel.writeString(title);
+        parcel.writeString(timePost);
+        parcel.writeInt(Views);
+        parcel.writeInt(isDelete);
+    }
 }

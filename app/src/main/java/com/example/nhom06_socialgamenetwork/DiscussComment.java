@@ -157,7 +157,7 @@ public class DiscussComment extends AppCompatActivity {
                         User user = snapshot1.getValue(User.class);
                         if (Integer.parseInt(totalLike.getText().toString()) % 5 == 0) {
                             int likeTotal = Integer.parseInt(totalLike.getText().toString());
-                            user.setReputation(likeTotal / 5);
+                            user.setReputation(user.getReputation()+(likeTotal / 5));
                         }
                         if (Integer.parseInt(totalDislike.getText().toString()) % 5 == 0) {
                             int dislikeTotal = Integer.parseInt(totalDislike.getText().toString());

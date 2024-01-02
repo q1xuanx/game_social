@@ -50,6 +50,7 @@ import com.squareup.picasso.Picasso;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -323,8 +324,7 @@ public class WriteNews extends AppCompatActivity {
                         news.setTitle(title.getText().toString());
                         news.setIdPic(idAnhBia);
                         news.setPicNews(getAllIdPic);
-                        LocalDateTime timePost = LocalDateTime.now();
-                        news.setTimePost(String.valueOf(timePost));
+                        news.setTimePost(String.valueOf(Calendar.getInstance().getTime()));
                         DatabaseReference datapush = databaseReference.child("post").push();
                         datapush.setValue(news).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

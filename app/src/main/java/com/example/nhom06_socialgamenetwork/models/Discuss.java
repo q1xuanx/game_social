@@ -20,6 +20,7 @@ public class Discuss implements Parcelable{
 
     private List<CommentDiscuss> comment;
     private int isClosed = 0;
+    private int isDelete = 0;
 
     public Discuss(){
 
@@ -33,6 +34,7 @@ public class Discuss implements Parcelable{
         this.dislike = new ArrayList<>();
         this.comment = new ArrayList<>();
         this.isClosed = 0;
+        this.isDelete = 0;
     }
 
     protected Discuss(Parcel in) {
@@ -129,6 +131,14 @@ public class Discuss implements Parcelable{
 
     public void setDatePost(String datePost) {
         this.datePost = datePost;
+    }
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
 
     @Override

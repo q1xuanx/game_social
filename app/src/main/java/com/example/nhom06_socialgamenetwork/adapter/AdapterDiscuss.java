@@ -46,7 +46,7 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Discuss discuss = list.get(position).second;
-        if (discuss.getIdPic() == null){
+        if (discuss.getIdPic() == null || discuss.getIdPic().equals("")) {
             HolderNotImage holderNotImage = (HolderNotImage) holder;
             holderNotImage.title.setText(discuss.getTitle());
             holderNotImage.username.setText(discuss.getNamePost());
@@ -85,7 +85,7 @@ public class AdapterDiscuss extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemViewType(int position) {
         Discuss discuss = list.get(position).second;
-        if (discuss.getIdPic() == null) return 1;
+        if (discuss.getIdPic() == null || discuss.getIdPic().equals("")) return 1;
         return 0;
     }
 

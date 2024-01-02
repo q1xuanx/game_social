@@ -46,7 +46,7 @@ public class AdapterGame extends RecyclerView.Adapter<AdapterGame.HolderImage>{
     static class HolderImage extends RecyclerView.ViewHolder{
 
         ImageView imgView;
-        TextView txtName, txtPoint;
+
         public HolderImage(@NonNull View itemView, RecyclerViewInterface choseItem, List<Pair<String,Game>> list) {
             super(itemView);
             imgView = itemView.findViewById(R.id.imageViewName);

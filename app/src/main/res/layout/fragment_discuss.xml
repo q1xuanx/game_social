@@ -23,6 +23,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.037"></TextView>
 
+
+
+
     <ImageView
         android:layout_width="143dp"
         android:layout_height="100dp"

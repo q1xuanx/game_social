@@ -142,7 +142,7 @@ public class FragementNews extends Fragment implements RecyclerViewInterface {
                 builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        recyclerView.setAdapter(adapterNews);
+                        recyclerView.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
                         dialogInterface.dismiss();
                     }
                 });

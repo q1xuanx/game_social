@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/quanlytintuc" android:icon="@drawable/img_manage_news" android:title="Quản lý tin tức"></item>
+        <item android:id="@+id/quanlyuser" android:icon="@drawable/img_manage_user" android:title="Quản lý người dùng"></item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item android:title="Bài viết đã xóa gần đây" android:icon="@drawable/img_bai_xoa_ganday" android:id="@+id/baixoaganday"></item>
+    </group>
+</menu>
