@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -69,9 +70,10 @@ public class WriteNews extends AppCompatActivity {
     List<Uri> saveUriPic;
     List<String> getAllIdPic;
     ProgressBar progressBar;
-    List<Pair<String,String>> listAdapter;
+    List<Pair<String, String>> listAdapter;
     AddNewsAdapter adapterAddNews;
     int index = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,11 +94,11 @@ public class WriteNews extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         listAdapter = new ArrayList<>();
-        adapterAddNews  = new AddNewsAdapter(listAdapter);
+        adapterAddNews = new AddNewsAdapter(listAdapter);
         container.setAdapter(adapterAddNews);
         container.setLayoutManager(new LinearLayoutManager(this));
         idAnhBia = "";
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -104,20 +106,38 @@ public class WriteNews extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int position = viewHolder.getAbsoluteAdapterPosition();
-                adapterAddNews.delData(position);
-                getAllIdPic.remove(position);
+                AlertDialog.Builder ask = new AlertDialog.Builder(WriteNews.this);
+                ask.setMessage("Bạn có muốn xóa nội dung này ?");
+                ask.setCancelable(false);
+                ask.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int position = viewHolder.getBindingAdapterPosition();
+                        adapterAddNews.delData(position);
+                        getAllIdPic.remove(position);
+                    }
+                });
+                ask.setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        container.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
+                    }
+                });
+                ask.show();
             }
         }).attachToRecyclerView(container);
+        //Chinh sua hinh anh
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
             }
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                if(viewHolder.getItemViewType() == 1) {
+                if (viewHolder.getItemViewType() == 1) {
                     Dialog dialog = new Dialog(WriteNews.this);
+                    dialog.setCancelable(false);
                     dialog.setContentView(R.layout.add_img_to_news);
                     Button addImg = dialog.findViewById(R.id.alertNewsImg);
                     imgTempToAdd = dialog.findViewById(R.id.imageViewNewsAdd);
@@ -136,34 +156,36 @@ public class WriteNews extends AppCompatActivity {
                     addImg.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (isAdd != null){
-                                getAllIdPic.set(viewHolder.getBindingAdapterPosition(), "PICTURE:"+isAdd);
-                                adapterAddNews.editData(viewHolder.getBindingAdapterPosition(),"picture",isAdd);
+                            if (isAdd != null) {
+                                getAllIdPic.set(viewHolder.getBindingAdapterPosition(), "PICTURE:" + isAdd);
+                                adapterAddNews.editData(viewHolder.getBindingAdapterPosition(), "picture", isAdd);
                                 addImg.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        if(isAdd != null){
+                                        if (isAdd != null) {
                                             dialog.dismiss();
                                             getAllIdPic.add("PICTURE:" + isAdd);
-                                            adapterAddNews.addData("picture",isAdd.toString());
+                                            adapterAddNews.addData("picture", isAdd.toString());
                                             isAdd = null;
-                                        }else {
+                                        } else {
                                             dialog.dismiss();
                                             isAdd = null;
                                         }
                                     }
                                 });
-                                isAdd=null;
+                                isAdd = null;
                                 dialog.dismiss();
-                            }else {
+                            } else {
+                                container.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
                                 dialog.dismiss();
                             }
                         }
                     });
                     dialog.show();
-                }else {
+                } else {
                     Dialog dialog = new Dialog(WriteNews.this);
                     dialog.setContentView(R.layout.add_text_to_news);
+                    dialog.setCancelable(false);
                     EditText edt = dialog.findViewById(R.id.noiDungTinTuc);
                     Button btn = dialog.findViewById(R.id.textSuccessAddNews);
                     edt.setText(adapterAddNews.getData(viewHolder.getBindingAdapterPosition()));
@@ -171,10 +193,10 @@ public class WriteNews extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             if (!edt.getText().equals("")) {
-                                getAllIdPic.add(viewHolder.getBindingAdapterPosition(), edt.getText().toString());
+                                getAllIdPic.set(viewHolder.getBindingAdapterPosition(), edt.getText().toString());
                                 adapterAddNews.editData(viewHolder.getBindingAdapterPosition(), "text", edt.getText().toString());
                                 dialog.dismiss();
-                            }else {
+                            } else {
                                 Toast.makeText(WriteNews.this, "Vui lòng điền tin tức vào", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -193,9 +215,9 @@ public class WriteNews extends AppCompatActivity {
         addTinTucBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (title.toString().equals("") || idAnhBia.equals("") || getAllIdPic.size() == 0){
+                if (title.toString().equals("") || idAnhBia.equals("") || getAllIdPic.size() == 0) {
                     Toast.makeText(WriteNews.this, "Có lỗi xảy ra, vui lòng kiểm tra lại", Toast.LENGTH_LONG).show();
-                }else {
+                } else {
                     progressBar.setVisibility(View.VISIBLE);
                     uploadPicToCloud();
                 }
@@ -220,11 +242,11 @@ public class WriteNews extends AppCompatActivity {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (edt.getText().toString().equals("") ){
+                        if (edt.getText().toString().equals("")) {
                             Toast.makeText(WriteNews.this, "Vui lòng nhập đầy đủ tin tức", Toast.LENGTH_SHORT);
-                        }else {
+                        } else {
                             getAllIdPic.add(edt.getText().toString());
-                            adapterAddNews.addData("text",edt.getText().toString());
+                            adapterAddNews.addData("text", edt.getText().toString());
                             dialog.dismiss();
                         }
                     }
@@ -253,12 +275,12 @@ public class WriteNews extends AppCompatActivity {
                 successAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(isAdd != null){
+                        if (isAdd != null) {
                             dialog.dismiss();
                             getAllIdPic.add("PICTURE:" + isAdd);
-                            adapterAddNews.addData("picture",isAdd.toString());
+                            adapterAddNews.addData("picture", isAdd.toString());
                             isAdd = null;
-                        }else {
+                        } else {
                             dialog.dismiss();
                             isAdd = null;
                         }
@@ -268,24 +290,22 @@ public class WriteNews extends AppCompatActivity {
             }
         });
     }
+
     ActivityResultLauncher<Intent> acitivityEditHinhAnhNoiDung = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == Activity.RESULT_OK){
+            if (result.getResultCode() == Activity.RESULT_OK) {
                 Intent data = result.getData();
                 Uri uri = data.getData();
-                if (index != -1) {
-                    Picasso.get().load(uri).into(imgTempToAdd);
-                    isAdd = uri.toString();
-                    index = -1;
-                }
+                isAdd = uri.toString();
+                Picasso.get().load(Uri.parse(isAdd)).into(imgTempToAdd);
             }
         }
     });
     ActivityResultLauncher<Intent> addHinhAnhNoiDung = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            if (result.getResultCode() == Activity.RESULT_OK){
+            if (result.getResultCode() == Activity.RESULT_OK) {
                 Intent data = result.getData();
                 Uri uri = data.getData();
                 Picasso.get().load(uri).into(imgTempToAdd);
@@ -296,7 +316,7 @@ public class WriteNews extends AppCompatActivity {
     ActivityResultLauncher<Intent> addAnhBiaActivity = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            if (result.getResultCode() == Activity.RESULT_OK){
+            if (result.getResultCode() == Activity.RESULT_OK) {
                 Intent data = result.getData();
                 Uri uri = data.getData();
                 Picasso.get().load(uri).into(anhBiaAdd);
@@ -304,16 +324,19 @@ public class WriteNews extends AppCompatActivity {
             }
         }
     });
-    public String splitString (@NonNull String s){
-        if (s.contains("PICTURE:")){
-            String temp = s.substring(8,s.length());
+
+    public String splitString(@NonNull String s) {
+        if (s.contains("PICTURE:")) {
+            String temp = s.substring(8, s.length());
             return temp;
         }
         return null;
     }
+
     int totalPic = 0;
-    public void uploadThumbnail(Uri uri){
-        StorageReference imgRef = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(uri));
+
+    public void uploadThumbnail(Uri uri) {
+        StorageReference imgRef = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
         imgRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -344,36 +367,37 @@ public class WriteNews extends AppCompatActivity {
             }
         });
     }
-    private void uploadPicToCloud(){
-            for (int i = 0; i < getAllIdPic.size(); i++) {
-                if (splitString(getAllIdPic.get(i)) != null) {
-                    Toast.makeText(WriteNews.this, getAllIdPic.get(i), Toast.LENGTH_SHORT).show();
-                    Uri uri = Uri.parse(splitString(getAllIdPic.get(i)));
-                    int index = i;
-                    totalPic++;
-                    StorageReference imgRef = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
-                    imgRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    getAllIdPic.set(index,uri.toString());
-                                    totalPic--;
-                                    if(totalPic==0){
-                                        uploadThumbnail(Uri.parse(idAnhBia));
-                                    }
+
+    private void uploadPicToCloud() {
+        for (int i = 0; i < getAllIdPic.size(); i++) {
+            if (splitString(getAllIdPic.get(i)) != null) {
+                Toast.makeText(WriteNews.this, getAllIdPic.get(i), Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse(splitString(getAllIdPic.get(i)));
+                int index = i;
+                totalPic++;
+                StorageReference imgRef = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+                imgRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                getAllIdPic.set(index, uri.toString());
+                                totalPic--;
+                                if (totalPic == 0) {
+                                    uploadThumbnail(Uri.parse(idAnhBia));
                                 }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(WriteNews.this, "Có lỗi trong quá trinh tải ảnh", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(WriteNews.this, "Có lỗi trong quá trinh tải ảnh", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
+        }
 
 
     }

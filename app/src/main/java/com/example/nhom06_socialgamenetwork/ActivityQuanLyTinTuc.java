@@ -1,5 +1,6 @@
 package com.example.nhom06_socialgamenetwork;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -59,11 +60,12 @@ public class ActivityQuanLyTinTuc extends AppCompatActivity implements RecyclerV
     }
 
     public void setData(){
-        Query query = databaseReference.child("post");
+        DatabaseReference query = databaseReference.child("post");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
+                    list.clear();
                     for (DataSnapshot snapshot1 : snapshot.getChildren()){
                         News news = snapshot1.getValue(News.class);
                         list.add(new Pair<>(snapshot1.getKey(),news));
@@ -83,11 +85,19 @@ public class ActivityQuanLyTinTuc extends AppCompatActivity implements RecyclerV
 
     @Override
     public void onItemClick(int postion) {
+        Intent edit = new Intent(this, AcitivityEditNews.class);
+        String key = list.get(postion).first;
+        edit.putExtra("key", key);
+        startActivity(edit);
+    }
+    @Override
+    public void itemClickGame(int position, String gameType) {
 
     }
 
     @Override
-    public void itemClickGame(int position, String gameType) {
-
+    protected void onResume() {
+        super.onResume();
+        setData();
     }
 }

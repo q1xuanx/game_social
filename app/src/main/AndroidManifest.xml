@@ -14,20 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Nhom06SocialGameNetwork"
         tools:targetApi="31">
+        <activity android:name=".AcitivityEditNews" android:exported="false"></activity>
         <activity
             android:name=".ActivityRegister"
             android:exported="false"></activity>
         <activity
             android:name=".ActivityQuanLyTinTuc"
-            android:exported="false"></activity>
-        <activity
-            android:name=".ActivityLogin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ActivityLogin"
+            android:exported="true">
         </activity>
         <activity
             android:name=".ActivityRateGame"
