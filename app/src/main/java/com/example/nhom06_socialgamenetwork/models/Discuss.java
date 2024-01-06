@@ -46,6 +46,7 @@ public class Discuss implements Parcelable{
         dislike = in.createStringArrayList();
         datePost = in.readString();
         isClosed = in.readInt();
+        isDelete = in.readInt();
     }
 
     public static final Creator<Discuss> CREATOR = new Creator<Discuss>() {
@@ -156,5 +157,6 @@ public class Discuss implements Parcelable{
         parcel.writeStringList(dislike);
         parcel.writeString(datePost);
         parcel.writeInt(isClosed);
+        parcel.writeInt(isDelete);
     }
 }

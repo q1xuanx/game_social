@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Nhom06SocialGameNetwork"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityManageDiscuss"
+            android:exported="false" />
+        <activity
             android:name=".ActivityDaXoaGanDay"
             android:exported="false" />
         <activity
@@ -25,13 +28,13 @@
             android:exported="false" />
         <activity
             android:name=".ActivityQuanLyTinTuc"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ActivityLogin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -45,6 +45,7 @@ public class ActivityDaXoaGanDay extends AppCompatActivity implements RecyclerVi
         setContentView(R.layout.activity_da_xoa_gan_day);
         initItem();
         setData();
+        getBack();
     }
 
     public void initItem() {
@@ -55,7 +56,14 @@ public class ActivityDaXoaGanDay extends AppCompatActivity implements RecyclerVi
         progressBar = findViewById(R.id.progressBar1);
         list = new ArrayList<>();
     }
-
+    public void getBack(){
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
     public void setData() {
         DatabaseReference dbGetData = databaseReference.child("post");
         dbGetData.addValueEventListener(new ValueEventListener() {

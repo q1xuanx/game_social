@@ -93,10 +93,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 }else if (item.getItemId() == R.id.quanlyuser){
-                    Toast.makeText(MainActivity.this, "Hello 2", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Hello 3", Toast.LENGTH_SHORT).show();
                     return true;
                 }else if (item.getItemId() == R.id.baixoaganday){
-                    Toast.makeText(MainActivity.this, "Hello 3", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, ActivityManageDiscuss.class);
+                    startActivity(intent);
                     return true;
                 }
                 return false;
