@@ -49,7 +49,6 @@ public class FragementNews extends Fragment implements RecyclerViewInterface {
 
     RecyclerView recyclerView;
     List<Pair<String, News>> list, listTem;
-    FloatingActionButton btnAddNews;
     AdapterNews adapterNews;
     DatabaseReference databaseReference;
 
@@ -59,7 +58,6 @@ public class FragementNews extends Fragment implements RecyclerViewInterface {
         View v = inflater.inflate(R.layout.fragment_news, container, false);
         ImageCarousel autoScoll = v.findViewById(R.id.autoScroll);
         recyclerView = v.findViewById(R.id.recyclerView2);
-        btnAddNews = v.findViewById(R.id.addNewsAdmin);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         list = new ArrayList<>();
         listTem = new ArrayList<>();
@@ -91,64 +89,6 @@ public class FragementNews extends Fragment implements RecyclerViewInterface {
         listImg.add(new CarouselItem("https://i.ytimg.com/vi/Ae89jZYuDg4/maxresdefault.jpg"));
         autoScoll.setData(listImg);
         autoScoll.setAutoPlay(true);
-
-        btnAddNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent changeview = new Intent(FragementNews.this.getActivity(), WriteNews.class);
-                startActivity(changeview);
-            }
-        });
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if (dx > 0 && btnAddNews.isShown()) {
-                    btnAddNews.hide();
-                }
-            }
-
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    btnAddNews.show();
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(FragementNews.this.getContext());
-                builder.setMessage("Bạn có muốn xóa: " + list.get(viewHolder.getBindingAdapterPosition()).second.getTitle() + " không?");
-                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        DatabaseReference editdata = databaseReference.child("post").child(list.get(viewHolder.getBindingAdapterPosition()).first);
-                        list.get(viewHolder.getBindingAdapterPosition()).second.setIsDelete(1);
-                        editdata.setValue(list.get(viewHolder.getBindingAdapterPosition()).second).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(FragementNews.this.getContext(), "Đã xóa thành công", Toast.LENGTH_SHORT).show();
-                                dialogInterface.dismiss();
-                            }
-                        });
-                    }
-                });
-                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        recyclerView.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.show();
-            }
-        }).attachToRecyclerView(recyclerView);
         return v;
     }
 

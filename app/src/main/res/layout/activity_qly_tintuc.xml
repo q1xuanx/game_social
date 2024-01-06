@@ -48,6 +48,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025"></TextView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/themTinTuc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.811"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.857"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewQuanLyTinTuc"
         android:layout_width="353dp"
