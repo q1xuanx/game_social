@@ -139,7 +139,7 @@ public class DiscussComment extends AppCompatActivity {
         }
         totalLike.setText(String.valueOf(discuss.getLike().size()));
         totalDislike.setText(String.valueOf(discuss.getDislike().size()));
-        if (discuss.getIdPic() != null) {
+        if (discuss.getIdPic() != null && !discuss.getIdPic().equals("")) {
             Picasso.get().load(Uri.parse(discuss.getIdPic())).into(imgView);
         } else {
             Picasso.get().load(R.drawable.game_logo).into(imgView);

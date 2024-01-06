@@ -145,7 +145,7 @@ public class FragmentDiscuss extends Fragment {
                 discuss1 = list.get(viewHolder.getBindingAdapterPosition()).second;
                 String key = list.get(viewHolder.getBindingAdapterPosition()).first, temp = discuss1.getIdPic();
 
-                if (discuss1.getNamePost().equals(MainActivity.user.getEmail()) || MainActivity.user.getIsAdmin() == 1) {
+                if (discuss1.getNamePost().equals(MainActivity.user.getEmail()) || MainActivity.user.getIsAdmin() > 0) {
                     Dialog dialog = new Dialog(FragmentDiscuss.this.getContext());
                     dialog.setContentView(R.layout.dialog_create_topic);
                     dialog.getWindow().setAttributes(changeSizeOfDialog(dialog)); // thay doi size cua topic 
@@ -166,8 +166,14 @@ public class FragmentDiscuss extends Fragment {
                             discuss1.setIdPic("");
                         }
                     });
-                    if (discuss1.getIdPic() != null || !discuss.getIdPic().equals("")) {
+                    dialog.setCancelable(false);
+                    int ok = 0;
+                    if (discuss1.getIdPic() != null && !discuss1.getIdPic().equals("")) {
                         Picasso.get().load(Uri.parse(discuss1.getIdPic())).into(imgViewTopic);
+                        ok = 1;
+                    }
+                    if (ok == 0){
+                        imgViewTopic.setImageResource(R.drawable.img_sample);
                     }
                     imgViewTopic.setOnClickListener(new View.OnClickListener() {
                         @Override
