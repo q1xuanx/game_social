@@ -2,6 +2,7 @@ package com.example.nhom06_socialgamenetwork;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.example.nhom06_socialgamenetwork.adapter.AdapterUserRateGame;
 import com.example.nhom06_socialgamenetwork.models.Game;
 import com.example.nhom06_socialgamenetwork.models.GameComment;
+import com.example.nhom06_socialgamenetwork.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ActivityRateGame extends AppCompatActivity {
@@ -61,7 +64,6 @@ public class ActivityRateGame extends AppCompatActivity {
             public void onClick(View view) {
                 Dialog dialog = new Dialog(ActivityRateGame.this);
                 dialog.setContentView(R.layout.dialog_rate_game);
-                dialog.setCancelable(false);
                 dialog.getWindow().setAttributes(changeSizeOfDialog(dialog));
                 SeekBar point = dialog.findViewById(R.id.seekBar2);
                 EditText comment = dialog.findViewById(R.id.rateUser);
@@ -125,7 +127,6 @@ public class ActivityRateGame extends AppCompatActivity {
                                 }
                                 if (isCmt){
                                     Toast.makeText(ActivityRateGame.this, "Bạn đã đánh giá game này rồi", Toast.LENGTH_SHORT).show();
-                                    return;
                                 }else{
                                     dialog.show();
                                 }
@@ -141,6 +142,64 @@ public class ActivityRateGame extends AppCompatActivity {
                 });
             }
         });
+        delComment();
+    }
+    public void delComment(){
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                GameComment gameComment = game.getList().get(viewHolder.getBindingAdapterPosition());
+                if (gameComment.getNameComment().equals(MainActivity.user.getEmail()) || MainActivity.user.getIsAdmin() > 0){
+                    game.getList().remove(viewHolder.getBindingAdapterPosition());
+                    DatabaseReference databaseReference1 = databaseReference.child("game").child(key);
+                    databaseReference1.setValue(game).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            if (MainActivity.user.getIsAdmin() > 0 && !gameComment.getNameComment().equals(MainActivity.user.getEmail())) {
+                                Query addNoti = databaseReference.child("user").orderByChild("email").equalTo(gameComment.getNameComment());
+                                addNoti.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()){
+                                            User user = new User();
+                                            String key = "";
+                                            for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                                                user = snapshot1.getValue(User.class);
+                                                key = snapshot1.getKey();
+                                            }
+                                            if (!gameComment.getNameComment().equals(MainActivity.user.getEmail())) {
+                                                if (user.getNoti() == null) {
+                                                    user.setNoti(new ArrayList<>());
+                                                    user.getNoti().add((Calendar.DATE) + ": " + "Comment đánh giá của bạn đã bị admin xóa do vi phạm tiêu chuẩn");
+                                                } else {
+                                                    user.getNoti().add((Calendar.DATE) + ": " + "Comment đánh giá của bạn đã bị admin xóa do vi phạm tiêu chuẩn");
+                                                }
+                                            }
+                                            DatabaseReference dataEdit = databaseReference.child("user").child(key);
+                                            dataEdit.setValue(user);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                            Toast.makeText(ActivityRateGame.this, "Đã xóa đánh giá thành công", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else {
+                    Toast.makeText(ActivityRateGame.this, "Không thể xóa được comment", Toast.LENGTH_SHORT).show();
+                    recyclerView.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
+                }
+            }
+        }).attachToRecyclerView(recyclerView);
     }
     public void init(){
         imgView = findViewById(R.id.imageGame);
@@ -155,7 +214,6 @@ public class ActivityRateGame extends AppCompatActivity {
         totalPointGet.setText(String.valueOf(getIntent().getIntExtra("Point",-1)));
         game = new Game(getIntent().getStringExtra("Pic"), getIntent().getStringExtra("NameGame"),list);
         list = new ArrayList<>();
-        game = new Game();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         dataChange();
     }
@@ -164,7 +222,7 @@ public class ActivityRateGame extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                Game game = snapshot.getValue(Game.class);
+                game = snapshot.getValue(Game.class);
                 int avg = 0;
                 if (game.getList() == null){
                     game.setList(list);

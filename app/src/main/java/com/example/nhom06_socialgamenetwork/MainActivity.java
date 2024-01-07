@@ -72,11 +72,7 @@ public class MainActivity extends AppCompatActivity {
         trans.commit();
     }
     public User getUser(Intent intent){
-        User user1 = new User();
-        user1.setEmail(intent.getStringExtra("username"));
-        user1.setFullname(intent.getStringExtra("fullname"));
-        user1.setIsAdmin(intent.getIntExtra("isAdmin",-1));
-        user1.setReputation(intent.getIntExtra("reputation",0));
+        User user1 = getIntent().getParcelableExtra("user");
         return user1;
     }
     public void setActionBar(){
@@ -93,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 }else if (item.getItemId() == R.id.quanlyuser){
-                    Toast.makeText(MainActivity.this, "Hello 3", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this,ActivityQuanLyUser.class);
+                    startActivity(intent);
                     return true;
                 }else if (item.getItemId() == R.id.baixoaganday){
                     Intent intent = new Intent(MainActivity.this, ActivityManageDiscuss.class);

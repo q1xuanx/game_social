@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Nhom06SocialGameNetwork"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityQuanLyUser"
+            android:exported="false" />
+        <activity
             android:name=".ActivityManageDiscuss"
             android:exported="false" />
         <activity
@@ -28,7 +31,7 @@
             android:exported="false" />
         <activity
             android:name=".ActivityQuanLyTinTuc"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ActivityLogin"
             android:exported="true">

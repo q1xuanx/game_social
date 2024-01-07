@@ -7,6 +7,18 @@
     android:background="@drawable/game_bg"
     tools:context=".FragmentProfile">
 
+    <ImageView
+        android:id="@+id/noti"
+        android:layout_width="93dp"
+        android:layout_height="51dp"
+        android:src="@drawable/baseline_doorbell_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.008"></ImageView>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profileInfoLayout"
         android:layout_width="357dp"
@@ -72,7 +84,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintVertical_bias="0.063" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logOut"
