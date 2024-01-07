@@ -6,24 +6,24 @@
 
     <TextView
         android:id="@+id/emailuser1"
-        android:layout_width="122dp"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
         android:ellipsize="end"
+        android:maxLines="1"
         android:text="Email: "></TextView>
 
     <TextView
         android:id="@+id/roleuser1"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Vai trò: "></TextView>
 
     <TextView
         android:id="@+id/tinhTranguser1"
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
         android:ellipsize="end"
+        android:maxLines="1"
         android:text="Tình trạng: "></TextView>
 
 </LinearLayout>

@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/readnew_bg"
     tools:context=".ActivityDaXoaGanDay">
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/game_title"
         android:text="Tin Tức Đã Xóa Gần Đây"
         android:textAlignment="center"
         android:textSize="30dp"
@@ -18,25 +20,43 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.002"></TextView>
+        app:layout_constraintVertical_bias="0.023"></TextView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyDaXoaGanDay"
-        android:layout_width="376dp"
-        android:layout_height="629dp"
-        android:layout_marginTop="16dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="550dp"
+        android:layout_marginBottom="50dp"
+        android:padding="16dp"
+        app:cardBackgroundColor="#D9C4FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:layout_constraintVertical_bias="0.136"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.711">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyDaXoaGanDay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="10dp" />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <ImageButton
         android:id="@+id/btnBackDaXoa"
-        android:layout_width="56dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="65dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="300dp"
         android:src="@drawable/baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

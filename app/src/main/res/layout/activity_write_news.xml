@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/readnew_bg"
     tools:context=".WriteNews">
 
     <Button
@@ -16,7 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container"
         app:layout_constraintVertical_bias="1.0"></Button>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutInput"
@@ -38,7 +38,10 @@
         android:id="@+id/picNewsAdd"
         android:layout_width="146dp"
         android:layout_height="123dp"
-        app:layout_constraintBottom_toTopOf="@+id/container"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rank_frame"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,60 +57,66 @@
         android:text="Chọn ảnh bìa"
         app:layout_constraintBottom_toTopOf="@+id/ButtonAddImg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.588"
+        app:layout_constraintHorizontal_bias="0.352"
         app:layout_constraintStart_toEndOf="@+id/picNewsAdd"
         app:layout_constraintTop_toBottomOf="@+id/layoutInput"
-        app:layout_constraintVertical_bias="1.0"></Button>
+        app:layout_constraintVertical_bias="0.866"></Button>
 
-    <TextView
-        android:layout_width="121dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="133dp"
-        android:layout_marginEnd="112dp"
-        android:layout_marginBottom="8dp"
-        android:paddingTop="15dp"
-        android:text="Thêm nội dung"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/container"
-        app:layout_constraintEnd_toEndOf="@+id/buttonAddText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/picNewsAdd"></TextView>
 
     <Button
         android:id="@+id/ButtonAddImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thêm ảnh"
+        android:text="Thêm hình ảnh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintHorizontal_bias="0.902"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.348" />
+        app:layout_constraintVertical_bias="0.339" />
 
     <Button
         android:id="@+id/buttonAddText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nội dung"
+        android:text="Thêm nội dung"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.346" />
+        app:layout_constraintVertical_bias="0.339" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/container"
-        android:layout_width="367dp"
-        android:layout_height="353dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView6"
+        android:layout_width="360dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="100dp"
+        android:padding="16dp"
+        app:cardBackgroundColor="#D9C4FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.711">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="10dp" />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <ProgressBar
         android:id="@+id/waitUpload"

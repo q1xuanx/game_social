@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/readnew_bg"
     tools:context=".ActivityQuanLyUser">
 
     <TextView
@@ -14,10 +15,10 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.847"
+        app:layout_constraintHorizontal_bias="0.925"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045"></TextView>
+        app:layout_constraintVertical_bias="0.05" />
 
     <TextView
         android:id="@+id/role"
@@ -27,10 +28,10 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.847"
+        app:layout_constraintHorizontal_bias="0.925"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.11"></TextView>
+        app:layout_constraintVertical_bias="0.11" />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -50,25 +51,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Danh Sách User"
+        android:background="@drawable/game_title"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.231"></TextView>
+        app:layout_constraintVertical_bias="0.231" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewQlyUser"
-        android:layout_width="match_parent"
-        android:layout_height="378dp"
-        android:padding="10dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="450dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.589" />
+        app:layout_constraintVertical_bias="0.711">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewQlyUser"
+            android:background="#E9CEFD"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp" />
+
+    </androidx.cardview.widget.CardView>
 
     <ImageButton
         android:id="@+id/back"
@@ -77,8 +88,9 @@
         android:src="@drawable/baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintHorizontal_bias="0.91"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.917"></ImageButton>
+        app:layout_constraintVertical_bias="0.957" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,12 +32,12 @@ import java.util.List;
 
 public class ActivityQuanLyTinTuc extends AppCompatActivity implements RecyclerViewInterface{
 
-    ImageButton daXoaGanDay, back;
+    ImageButton back;
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
     List<Pair<String, News>> list;
     AdapterNews adapterNews;
-    FloatingActionButton btnThemNews;
+    FloatingActionButton btnThemNews,daXoaGanDay;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:orientation="vertical"
-    android:layout_height="350dp">
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="299dp"
-        android:layout_height="52dp"
-        android:gravity="center_vertical"
-        android:text="Email: "
-        android:textSize="20dp"></TextView>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="315dp"
-        android:layout_height="wrap_content">
+        android:layout_width="344dp"
+        android:layout_height="293dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="262dp"
-            android:layout_height="61dp"
-            android:inputType="textPassword"></EditText>
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:text="Email: "
+            android:textSize="20dp" />
 
-        <ImageButton
-            android:id="@+id/seePass"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="315dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="262dp"
+                android:layout_height="61dp"
+                android:inputType="textPassword" />
+
+            <ImageButton
+                android:id="@+id/seePass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_eyes" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/role"
+            android:layout_width="297dp"
+            android:layout_height="52dp" />
+
+        <Spinner
+            android:id="@+id/banned"
+            android:layout_width="295dp"
+            android:layout_height="52dp" />
+
+        <Button
+            android:id="@+id/luuCaiDat"
+            android:layout_width="114dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/img_eyes"></ImageButton>
+            android:layout_marginTop="20dp"
+            android:text="Save" />
     </LinearLayout>
 
-    <Spinner
-        android:id="@+id/role"
-        android:layout_width="297dp"
-        android:layout_height="52dp"></Spinner>
-
-    <Spinner
-        android:id="@+id/banned"
-        android:layout_width="295dp"
-        android:layout_height="52dp"></Spinner>
-
-    <Button
-        android:layout_marginRight="15dp"
-        android:id="@+id/luuCaiDat"
-        android:layout_width="114dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Save"></Button>
-</LinearLayout>
+</RelativeLayout>
