@@ -105,36 +105,24 @@ public class ActivityLogin extends AppCompatActivity {
                             for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                                 user = snapshot1.getValue(User.class);
                             }
-                            if (user.getPass().equals(pass.getText().toString())) {
+                            if (user.getPass().equals(pass.getText().toString()) && user.getIsBanned() == 0) {
                                 // Save email and password in SharedPreferences
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(PREF_EMAIL, user.getEmail());
                                 editor.putString(PREF_PASSWORD, pass.getText().toString());
                                 editor.apply();
 
-                                intent.putExtra("username", user.getEmail());
-                                intent.putExtra("fullname", user.getFullname());
-                                intent.putExtra("isAdmin", user.getIsAdmin());
-                                intent.putExtra("reputation", user.getReputation());
-
-                            if (user.getPass().equals(pass.getText().toString()) && user.getIsBanned() == 0) {
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable("user", user);
                                 intent.putExtras(bundle);
-
                                 startActivity(intent);
                                 finish();
                                 Toast.makeText(ActivityLogin.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ActivityLogin.this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                             }
-
                         } else {
-                            Toast.makeText(ActivityLogin.this, "Email không tồn tại", Toast.LENGTH_SHORT).show();
-
-                        }else {
                             Toast.makeText(ActivityLogin.this, "Email không tồn tại hoặc đã bị khóa", Toast.LENGTH_SHORT).show();
-
                         }
                     }
 
