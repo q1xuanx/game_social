@@ -3,6 +3,7 @@ package com.example.nhom06_socialgamenetwork;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.SystemClock;
 import android.util.Pair;
 import android.view.DragEvent;
 import android.view.GestureDetector;
@@ -39,12 +41,14 @@ import android.widget.Toast;
 
 import com.example.nhom06_socialgamenetwork.adapter.AdapterDiscuss;
 import com.example.nhom06_socialgamenetwork.models.Discuss;
+import com.example.nhom06_socialgamenetwork.models.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -113,6 +117,32 @@ public class FragmentDiscuss extends Fragment {
                             dbedit.setValue(discuss1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
+                                    if(MainActivity.user.getIsAdmin() > 0){
+                                        Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss1.getNamePost());
+                                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if (snapshot.exists()){
+                                                    for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                                                        User user = snapshot1.getValue(User.class);
+                                                        if (user.getNoti() == null){
+                                                            user.setNoti(new ArrayList<>());
+                                                            user.getNoti().add((Calendar.DATE)+": " + " Bài viết của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
+                                                        }else {
+                                                            user.getNoti().add((Calendar.DATE)+": " + " Bài viết của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
+                                                        }
+                                                        DatabaseReference dataedit = databaseReference.child("user").child(snapshot1.getKey());
+                                                        dataedit.setValue(user);
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
                                     Toast.makeText(FragmentDiscuss.this.getContext(), "Đã thêm vào thùng rác", Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -145,7 +175,7 @@ public class FragmentDiscuss extends Fragment {
                 discuss1 = list.get(viewHolder.getBindingAdapterPosition()).second;
                 String key = list.get(viewHolder.getBindingAdapterPosition()).first, temp = discuss1.getIdPic();
 
-                if (discuss1.getNamePost().equals(MainActivity.user.getEmail()) || MainActivity.user.getIsAdmin() == 1) {
+                if (discuss1.getNamePost().equals(MainActivity.user.getEmail())) {
                     Dialog dialog = new Dialog(FragmentDiscuss.this.getContext());
                     dialog.setContentView(R.layout.dialog_create_topic);
                     dialog.getWindow().setAttributes(changeSizeOfDialog(dialog)); // thay doi size cua topic 
@@ -166,8 +196,14 @@ public class FragmentDiscuss extends Fragment {
                             discuss1.setIdPic("");
                         }
                     });
-                    if (discuss1.getIdPic() != null || !discuss.getIdPic().equals("")) {
+                    dialog.setCancelable(false);
+                    int ok = 0;
+                    if (discuss1.getIdPic() != null && !discuss1.getIdPic().equals("")) {
                         Picasso.get().load(Uri.parse(discuss1.getIdPic())).into(imgViewTopic);
+                        ok = 1;
+                    }
+                    if (ok == 0){
+                        imgViewTopic.setImageResource(R.drawable.img_sample);
                     }
                     imgViewTopic.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -234,7 +270,7 @@ public class FragmentDiscuss extends Fragment {
                     dialog.show();
                 } else {
                     recyclerView.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
-                    Toast.makeText(FragmentDiscuss.this.getContext(), "Không được xóa bài của user khác", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FragmentDiscuss.this.getContext(), "Không được chỉnh sửa bài của user khác", Toast.LENGTH_SHORT).show();
                 }
             }
         }).attachToRecyclerView(recyclerView);

@@ -37,10 +37,13 @@ public class AdapterDaXoaDiscuss extends RecyclerView.Adapter<AdapterDaXoaDiscus
     @Override
     public void onBindViewHolder(@NonNull HolderView holder, int position) {
         Discuss discuss = list.get(position).second;
-        if (discuss.getIdPic().equals(null)){
-            Picasso.get().load(R.drawable.game_logo).into(holder.imgPic);
-        }else {
+        int ok = 0;
+        if (discuss.getIdPic() != null){
             Picasso.get().load(discuss.getIdPic()).into(holder.imgPic);
+            ok = 1;
+        }
+        if (ok == 0){
+            holder.imgPic.setImageResource(R.drawable.game_logo);
         }
         holder.txtNamePost.setText(discuss.getNamePost());
         holder.txtDetails.setText(discuss.getDetails());

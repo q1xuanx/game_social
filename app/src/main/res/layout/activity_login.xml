@@ -21,6 +21,20 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/login_logo" />
 
+    <TextView
+        android:clickable="true"
+        android:id="@+id/forgetPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quên mật khẩu?"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.737"></TextView>
+
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"

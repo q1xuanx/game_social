@@ -1,6 +1,7 @@
 package com.example.nhom06_socialgamenetwork;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,8 +15,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,8 +36,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Comment;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class DiscussComment extends AppCompatActivity {
@@ -63,6 +69,7 @@ public class DiscussComment extends AppCompatActivity {
         dislikeEvent();
         writeCommentEvent();
         closeTopicEvent();
+        delComment();
     }
 
     public void getData(Intent intent) {
@@ -139,11 +146,78 @@ public class DiscussComment extends AppCompatActivity {
         }
         totalLike.setText(String.valueOf(discuss.getLike().size()));
         totalDislike.setText(String.valueOf(discuss.getDislike().size()));
-        if (discuss.getIdPic() != null) {
+        if (discuss.getIdPic() != null && !discuss.getIdPic().equals("")) {
             Picasso.get().load(Uri.parse(discuss.getIdPic())).into(imgView);
         } else {
             Picasso.get().load(R.drawable.game_logo).into(imgView);
         }
+    }
+
+    public void delComment() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                CommentDiscuss comment = discuss.getComment().get(viewHolder.getBindingAdapterPosition());
+                if (comment.getNameUser().equals(MainActivity.user.getEmail()) || MainActivity.user.getIsAdmin() > 0) {
+                    AlertDialog.Builder ask = new AlertDialog.Builder(DiscussComment.this);
+                    ask.setMessage("Bạn có muốn xóa comment");
+                    ask.setNegativeButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            DatabaseReference dataDel = databaseReference.child("discuss").child(key);
+                            discuss.getComment().remove(viewHolder.getBindingAdapterPosition());
+                            dataDel.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    if (MainActivity.user.getIsAdmin() > 0 && !comment.getNameUser().equals(MainActivity.user.getEmail())) {
+                                        Query query = databaseReference.child("user").orderByChild("email").equalTo(comment.getNameUser());
+                                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if (snapshot.exists()) {
+                                                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                                        User user = snapshot1.getValue(User.class);
+                                                        if (user.getNoti() == null) {
+                                                            user.setNoti(new ArrayList<>());
+                                                            user.getNoti().add((Calendar.DATE) + ": " + " Comment của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
+                                                        } else {
+                                                            user.getNoti().add((Calendar.DATE) + ": " + " Comment của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
+                                                        }
+                                                        DatabaseReference dataedit = databaseReference.child("user").child(snapshot1.getKey());
+                                                        dataedit.setValue(user);
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
+                                    Toast.makeText(DiscussComment.this, "Đã xóa thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    });
+                    ask.setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            listComment.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
+                        }
+                    });
+                    ask.show();
+                } else {
+                    listComment.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
+                    Toast.makeText(DiscussComment.this, "Không được xóa bài của user khác", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).attachToRecyclerView(listComment);
     }
 
     public void addRep() {
@@ -157,7 +231,7 @@ public class DiscussComment extends AppCompatActivity {
                         User user = snapshot1.getValue(User.class);
                         if (Integer.parseInt(totalLike.getText().toString()) % 5 == 0) {
                             int likeTotal = Integer.parseInt(totalLike.getText().toString());
-                            user.setReputation(user.getReputation()+(likeTotal / 5));
+                            user.setReputation(user.getReputation() + (likeTotal / 5));
                         }
                         if (Integer.parseInt(totalDislike.getText().toString()) % 5 == 0) {
                             int dislikeTotal = Integer.parseInt(totalDislike.getText().toString());
@@ -188,6 +262,35 @@ public class DiscussComment extends AppCompatActivity {
                         discuss.getLike().remove(indexLike);
                     } else {
                         discuss.getLike().add(MainActivity.user.getEmail());
+                        if (!MainActivity.user.getEmail().equals(discuss.getNamePost())) {
+                            Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        User user = new User();
+                                        String key = "";
+                                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                            user = snapshot1.getValue(User.class);
+                                            key = snapshot1.getKey();
+                                            if (user.getNoti() == null) {
+                                                user.setNoti(new ArrayList<>());
+                                                user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm like mới ở bài viết " + discuss.getTitle());
+                                            } else {
+                                                user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm like mới ở bài viết " + discuss.getTitle());
+                                            }
+                                        }
+                                        DatabaseReference dataedit = databaseReference.child("user").child(key);
+                                        dataedit.setValue(user);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
                     }
                 } else {
                     int indexLike = discuss.getLike().indexOf(MainActivity.user.getEmail());
@@ -195,6 +298,34 @@ public class DiscussComment extends AppCompatActivity {
                         discuss.getLike().remove(indexLike);
                     } else {
                         discuss.getLike().add(MainActivity.user.getEmail());
+                        if (!MainActivity.user.getEmail().equals(discuss.getNamePost())) {
+                            Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        User user = new User();
+                                        String key = "";
+                                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                            user = snapshot1.getValue(User.class);
+                                            key = snapshot1.getKey();
+                                        }
+                                        if (user.getNoti() == null) {
+                                            user.setNoti(new ArrayList<>());
+                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm like mới ở bài viết " + discuss.getTitle());
+                                        } else {
+                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm like mới ở bài viết " + discuss.getTitle());
+                                        }
+                                        DatabaseReference dataedit = databaseReference.child("user").child(key);
+                                        dataedit.setValue(user);
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
                     }
                 }
                 dbedit.setValue(discuss);
@@ -216,6 +347,34 @@ public class DiscussComment extends AppCompatActivity {
                         discuss.getDislike().remove(indexLike);
                     } else {
                         discuss.getDislike().add(MainActivity.user.getEmail());
+                        if (!MainActivity.user.getEmail().equals(discuss.getNamePost())) {
+                            Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        User user = new User();
+                                        String key = "";
+                                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                            user = snapshot1.getValue(User.class);
+                                        }
+                                        if (user.getNoti() == null) {
+                                            user.setNoti(new ArrayList<>());
+                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn bị dislike mới ở bài viết " + discuss.getTitle());
+                                        } else {
+                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn bị dislike mới ở bài viết  " + discuss.getTitle());
+                                        }
+                                        DatabaseReference dataedit = databaseReference.child("user").child(key);
+                                        dataedit.setValue(user);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
                     }
                 } else {
                     int indexDislike = discuss.getDislike().indexOf(MainActivity.user.getEmail());
@@ -251,6 +410,32 @@ public class DiscussComment extends AppCompatActivity {
                             dbRef.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
+                                    if (!discuss.getNamePost().equals(MainActivity.user.getEmail())) {
+                                        Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
+                                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if (snapshot.exists()) {
+                                                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                                        User user = snapshot1.getValue(User.class);
+                                                        if (user.getNoti() == null) {
+                                                            user.setNoti(new ArrayList<>());
+                                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
+                                                        } else {
+                                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
+                                                        }
+                                                        DatabaseReference dataedit = databaseReference.child("user").child(snapshot1.getKey());
+                                                        dataedit.setValue(user);
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
                                     Toast.makeText(DiscussComment.this, "Đã bình luận", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
