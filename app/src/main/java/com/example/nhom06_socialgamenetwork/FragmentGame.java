@@ -94,6 +94,9 @@ public class FragmentGame extends Fragment implements RecyclerViewInterface {
             }
         });
         buttonAddGame = v.findViewById(R.id.addGameToRate);
+        if (MainActivity.user.getIsAdmin() == 0){
+            buttonAddGame.setVisibility(View.GONE);
+        }
         buttonAddGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

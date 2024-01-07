@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="320dp"
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="288dp"
+        android:layout_height="63dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputEmailForget"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="288dp"
+        android:layout_height="63dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputPasswordNew"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Password" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="288dp"
+        android:layout_height="63dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputConfirmPasswordNew"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Confirm Password" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/thayDoiPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Thay Đổi"
+        android:layout_marginRight="10dp"></Button>
+</LinearLayout>

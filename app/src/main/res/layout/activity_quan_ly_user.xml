@@ -11,27 +11,29 @@
         android:id="@+id/username"
         android:layout_width="195dp"
         android:layout_height="24dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="28dp"
         android:text="Xin chào: "
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.925"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView9"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.042" />
 
     <TextView
         android:id="@+id/role"
         android:layout_width="195dp"
         android:layout_height="24dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="28dp"
         android:text="Role: "
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.925"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView9"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.11" />
+        app:layout_constraintVertical_bias="0.113" />
 
     <ImageView
         android:id="@+id/imageView9"

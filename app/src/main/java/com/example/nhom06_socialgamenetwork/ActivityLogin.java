@@ -4,17 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nhom06_socialgamenetwork.models.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +37,7 @@ public class ActivityLogin extends AppCompatActivity {
     CheckBox showPass;
     DatabaseReference databaseReference;
     SharedPreferences sharedPreferences;
+    TextView forgetPass;
     private static final String PREF_EMAIL = "email";
     private static final String PREF_PASSWORD = "password";
 
@@ -58,6 +66,7 @@ public class ActivityLogin extends AppCompatActivity {
         buttonSignUp = findViewById(R.id.signUpButton);
         email = findViewById(R.id.inputEmail);
         pass = findViewById(R.id.inputPassword);
+        forgetPass = findViewById(R.id.forgetPass);
         showPass = findViewById(R.id.checkBoxShowPass);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -75,7 +84,75 @@ public class ActivityLogin extends AppCompatActivity {
             }
         });
     }
+    public void forgetPassEvent(){
+        forgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog = new Dialog(ActivityLogin.this);
+                dialog.setContentView(R.layout.dialog_laylaimatkhau);
+                TextInputEditText email = dialog.findViewById(R.id.inputEmailForget), password = dialog.findViewById(R.id.inputPasswordNew), confirmpass = dialog.findViewById(R.id.inputConfirmPasswordNew);
+                Button findPass = dialog.findViewById(R.id.thayDoiPass);
+                email.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if(Patterns.EMAIL_ADDRESS.matcher(charSequence).matches()){
+                            email.setError("Không đúng định dạng email");
+                        }else email.setError(null);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                    }
+                });
+                findPass.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (email.getText().toString().equals("") || password.getText().toString().equals("") || confirmpass.getText().toString().equals("")){
+                            Toast.makeText(ActivityLogin.this, "Vui lòng không để trống", Toast.LENGTH_SHORT).show();
+                        }else if (!password.getText().toString().equals(confirmpass.getText().toString())){
+                            Toast.makeText(ActivityLogin.this, "Mật khẩu nhập lại không khớp", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Query checkEmail = databaseReference.child("user").orderByChild("email").equalTo(email.getText().toString());
+                            checkEmail.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        User user = new User();
+                                        String key = "";
+                                        for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                                            user = snapshot1.getValue(User.class);
+                                            key = snapshot1.getKey();
+                                        }
+                                        user.setPass(pass.getText().toString());
+                                        DatabaseReference editPass = databaseReference.child("user").child(key);
+                                        editPass.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(ActivityLogin.this, "Thay đổi thành công", Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                    }else {
+                                        Toast.makeText(ActivityLogin.this, "Email không tồn tại", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
     public void signUpEvent() {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

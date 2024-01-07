@@ -37,6 +37,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -175,9 +177,9 @@ public class ActivityRateGame extends AppCompatActivity {
                                             if (!gameComment.getNameComment().equals(MainActivity.user.getEmail())) {
                                                 if (user.getNoti() == null) {
                                                     user.setNoti(new ArrayList<>());
-                                                    user.getNoti().add((Calendar.DATE) + ": " + "Comment đánh giá của bạn đã bị admin xóa do vi phạm tiêu chuẩn");
+                                                    user.getNoti().add(getDate() + ": " + "Comment đánh giá của bạn đã bị admin xóa do vi phạm tiêu chuẩn");
                                                 } else {
-                                                    user.getNoti().add((Calendar.DATE) + ": " + "Comment đánh giá của bạn đã bị admin xóa do vi phạm tiêu chuẩn");
+                                                    user.getNoti().add(getDate()  + ": " + "Comment đánh giá của bạn đã bị admin xóa do vi phạm tiêu chuẩn");
                                                 }
                                             }
                                             DatabaseReference dataEdit = databaseReference.child("user").child(key);
@@ -278,5 +280,10 @@ public class ActivityRateGame extends AppCompatActivity {
                 textView.getPaint().setShader(textShader);
             }
         }
+    }
+    public String getDate(){
+        LocalDate currentDate = LocalDate.now();
+        String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return formattedDate;
     }
 }

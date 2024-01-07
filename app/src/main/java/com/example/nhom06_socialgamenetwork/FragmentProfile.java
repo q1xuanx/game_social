@@ -125,7 +125,7 @@ public class FragmentProfile extends Fragment {
                                         @Override
                                         public void onSuccess(Void unused) {
                                             Toast.makeText(FragmentProfile.this.getContext(), "Đã xóa thông báo", Toast.LENGTH_SHORT).show();
-                                            user.setNoti(new ArrayList<>());
+                                            MainActivity.user.setNoti(new ArrayList<>());
                                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(FragmentProfile.this.getContext(), android.R.layout.simple_list_item_1,MainActivity.user.getNoti());
                                             notifi.setAdapter(arrayAdapter);
                                         }

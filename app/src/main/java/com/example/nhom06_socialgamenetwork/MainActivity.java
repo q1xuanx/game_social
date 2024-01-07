@@ -13,6 +13,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -100,6 +101,16 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        Menu menu = navigationView.getMenu();
+        if (MainActivity.user.getIsAdmin() == 1){
+            MenuItem menuItem = menu.findItem(R.id.quanlyuser);
+            menuItem.setVisible(false);
+        }else if (MainActivity.user.getIsAdmin() == 0){
+            MenuItem menuItem1 = menu.findItem(R.id.quanlyuser);
+            MenuItem menuItem2 = menu.findItem(R.id.quanlytintuc);
+            menuItem1.setVisible(false);
+            menuItem2.setVisible(false);
+        }
     }
 
     @Override

@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nhom06_socialgamenetwork.adapter.AdapterNews;
+import com.example.nhom06_socialgamenetwork.models.Discuss;
 import com.example.nhom06_socialgamenetwork.models.News;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -95,26 +96,34 @@ public class FragementNews extends Fragment implements RecyclerViewInterface {
     @Override
     public void onItemClick(int postion) {
         Intent intent = new Intent(FragementNews.this.getContext(), ReadDetailsNews.class);
-        databaseReference = databaseReference.child("post").child(list.get(postion).first);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference databaseReference1 = databaseReference.child("post").child(list.get(postion).first);
+        News news = list.get(postion).second;
+        news.setViews(news.getViews() + 1);
+        databaseReference1.setValue(news, new DatabaseReference.CompletionListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    GenericTypeIndicator<ArrayList<String>> typeIndicator = new GenericTypeIndicator<ArrayList<String>>() {
-                    };
-                    intent.putExtra("title", snapshot.child("title").getValue(String.class));
-                    intent.putExtra("thumnail", snapshot.child("idPic").getValue(String.class));
-                    ArrayList<String> picNewsList = snapshot.child("picNews").getValue(typeIndicator);
-                    intent.putStringArrayListExtra("details", picNewsList);
-                    intent.putExtra("time", snapshot.child("timePost").getValue(String.class));
-                    intent.putExtra("key", snapshot.getKey());
-                    startActivity(intent);
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                if (error == null){
+                    databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                GenericTypeIndicator<ArrayList<String>> typeIndicator = new GenericTypeIndicator<ArrayList<String>>() {
+                                };
+                                intent.putExtra("title", snapshot.child("title").getValue(String.class));
+                                intent.putExtra("thumnail", snapshot.child("idPic").getValue(String.class));
+                                ArrayList<String> picNewsList = snapshot.child("picNews").getValue(typeIndicator);
+                                intent.putStringArrayListExtra("details", picNewsList);
+                                intent.putExtra("time", snapshot.child("timePost").getValue(String.class));
+                                intent.putExtra("key", snapshot.getKey());
+                                startActivity(intent);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

@@ -38,6 +38,8 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Comment;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -180,17 +182,20 @@ public class DiscussComment extends AppCompatActivity {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 if (snapshot.exists()) {
+                                                    User user = new User();
+                                                    String key = "";
                                                     for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                        User user = snapshot1.getValue(User.class);
-                                                        if (user.getNoti() == null) {
-                                                            user.setNoti(new ArrayList<>());
-                                                            user.getNoti().add((Calendar.DATE) + ": " + " Comment của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
-                                                        } else {
-                                                            user.getNoti().add((Calendar.DATE) + ": " + " Comment của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
-                                                        }
-                                                        DatabaseReference dataedit = databaseReference.child("user").child(snapshot1.getKey());
-                                                        dataedit.setValue(user);
+                                                        user = snapshot1.getValue(User.class);
+                                                        key = snapshot1.getKey();
                                                     }
+                                                    if (user.getNoti() == null) {
+                                                        user.setNoti(new ArrayList<>());
+                                                        user.getNoti().add(getDate()  + ": " + " Comment của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
+                                                    } else {
+                                                        user.getNoti().add(getDate()  + ": " + " Comment của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
+                                                    }
+                                                    DatabaseReference dataedit = databaseReference.child("user").child(key);
+                                                    dataedit.setValue(user);
                                                 }
                                             }
 
@@ -262,6 +267,18 @@ public class DiscussComment extends AppCompatActivity {
                         discuss.getLike().remove(indexLike);
                     } else {
                         discuss.getLike().add(MainActivity.user.getEmail());
+                    }
+                } else {
+                    int indexLike = discuss.getLike().indexOf(MainActivity.user.getEmail());
+                    if (indexLike != -1) {
+                        discuss.getLike().remove(indexLike);
+                    } else {
+                        discuss.getLike().add(MainActivity.user.getEmail());
+                    }
+                }
+                dbedit.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
                         if (!MainActivity.user.getEmail().equals(discuss.getNamePost())) {
                             Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
                             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -275,9 +292,9 @@ public class DiscussComment extends AppCompatActivity {
                                             key = snapshot1.getKey();
                                             if (user.getNoti() == null) {
                                                 user.setNoti(new ArrayList<>());
-                                                user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm like mới ở bài viết " + discuss.getTitle());
+                                                user.getNoti().add(getDate()  + ": " + discuss.getTitle() + " có thêm tương tác");
                                             } else {
-                                                user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm like mới ở bài viết " + discuss.getTitle());
+                                                user.getNoti().add(getDate()  + ": " + discuss.getTitle() + " có thêm tương tác");
                                             }
                                         }
                                         DatabaseReference dataedit = databaseReference.child("user").child(key);
@@ -292,43 +309,7 @@ public class DiscussComment extends AppCompatActivity {
                             });
                         }
                     }
-                } else {
-                    int indexLike = discuss.getLike().indexOf(MainActivity.user.getEmail());
-                    if (indexLike != -1) {
-                        discuss.getLike().remove(indexLike);
-                    } else {
-                        discuss.getLike().add(MainActivity.user.getEmail());
-                        if (!MainActivity.user.getEmail().equals(discuss.getNamePost())) {
-                            Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
-                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()) {
-                                        User user = new User();
-                                        String key = "";
-                                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                            user = snapshot1.getValue(User.class);
-                                            key = snapshot1.getKey();
-                                        }
-                                        if (user.getNoti() == null) {
-                                            user.setNoti(new ArrayList<>());
-                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm like mới ở bài viết " + discuss.getTitle());
-                                        } else {
-                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm like mới ở bài viết " + discuss.getTitle());
-                                        }
-                                        DatabaseReference dataedit = databaseReference.child("user").child(key);
-                                        dataedit.setValue(user);
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                        }
-                    }
-                }
-                dbedit.setValue(discuss);
+                });
                 addRep();
             }
         });
@@ -347,6 +328,18 @@ public class DiscussComment extends AppCompatActivity {
                         discuss.getDislike().remove(indexLike);
                     } else {
                         discuss.getDislike().add(MainActivity.user.getEmail());
+                    }
+                } else {
+                    int indexDislike = discuss.getDislike().indexOf(MainActivity.user.getEmail());
+                    if (indexDislike != -1) {
+                        discuss.getDislike().remove(indexDislike);
+                    } else {
+                        discuss.getDislike().add(MainActivity.user.getEmail());
+                    }
+                }
+                dbedit.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
                         if (!MainActivity.user.getEmail().equals(discuss.getNamePost())) {
                             Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
                             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -357,12 +350,13 @@ public class DiscussComment extends AppCompatActivity {
                                         String key = "";
                                         for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                                             user = snapshot1.getValue(User.class);
-                                        }
-                                        if (user.getNoti() == null) {
-                                            user.setNoti(new ArrayList<>());
-                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn bị dislike mới ở bài viết " + discuss.getTitle());
-                                        } else {
-                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn bị dislike mới ở bài viết  " + discuss.getTitle());
+                                            key = snapshot1.getKey();
+                                            if (user.getNoti() == null) {
+                                                user.setNoti(new ArrayList<>());
+                                                user.getNoti().add(getDate()  + ": " + discuss.getTitle() + " có thêm tương tác");
+                                            } else {
+                                                user.getNoti().add(getDate() + ": " + discuss.getTitle() + " có thêm tương tác");
+                                            }
                                         }
                                         DatabaseReference dataedit = databaseReference.child("user").child(key);
                                         dataedit.setValue(user);
@@ -376,15 +370,7 @@ public class DiscussComment extends AppCompatActivity {
                             });
                         }
                     }
-                } else {
-                    int indexDislike = discuss.getDislike().indexOf(MainActivity.user.getEmail());
-                    if (indexDislike != -1) {
-                        discuss.getDislike().remove(indexDislike);
-                    } else {
-                        discuss.getDislike().add(MainActivity.user.getEmail());
-                    }
-                }
-                dbedit.setValue(discuss);
+                });
                 addRep();
             }
         });
@@ -416,17 +402,20 @@ public class DiscussComment extends AppCompatActivity {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 if (snapshot.exists()) {
+                                                    User user = new User();
+                                                    String key = "";
                                                     for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                        User user = snapshot1.getValue(User.class);
-                                                        if (user.getNoti() == null) {
-                                                            user.setNoti(new ArrayList<>());
-                                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
-                                                        } else {
-                                                            user.getNoti().add((Calendar.DATE) + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
-                                                        }
-                                                        DatabaseReference dataedit = databaseReference.child("user").child(snapshot1.getKey());
-                                                        dataedit.setValue(user);
+                                                        user = snapshot1.getValue(User.class);
+                                                        key = snapshot1.getKey();
                                                     }
+                                                    if (user.getNoti() == null) {
+                                                        user.setNoti(new ArrayList<>());
+                                                        user.getNoti().add(getDate()  + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
+                                                    } else {
+                                                        user.getNoti().add(getDate()  + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
+                                                    }
+                                                    DatabaseReference dataedit = databaseReference.child("user").child(key);
+                                                    dataedit.setValue(user);
                                                 }
                                             }
 
@@ -472,5 +461,10 @@ public class DiscussComment extends AppCompatActivity {
                 }
             });
         }
+    }
+    public String getDate(){
+        LocalDate currentDate = LocalDate.now();
+        String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return formattedDate;
     }
 }

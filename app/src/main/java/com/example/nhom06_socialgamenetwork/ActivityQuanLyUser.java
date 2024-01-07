@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -49,6 +51,7 @@ public class ActivityQuanLyUser extends AppCompatActivity implements RecyclerVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quan_ly_user);
         initItem();
+        backEvent();
     }
 
 
@@ -58,11 +61,20 @@ public class ActivityQuanLyUser extends AppCompatActivity implements RecyclerVie
         recyclerView.setLayoutManager(new LinearLayoutManager(ActivityQuanLyUser.this));
         nameUser = findViewById(R.id.username);
         role = findViewById(R.id.role);
+        nameUser.setText(nameUser.getText() + MainActivity.user.getFullname());
+        role.setText(role.getText() + " Super Admin");
         list = new ArrayList<>();
         databaseref = FirebaseDatabase.getInstance().getReference();
         getData();
     }
-
+    public void backEvent(){
+        backToPages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
     public void getData(){
         DatabaseReference get = databaseref.child("user");
         get.addValueEventListener(new ValueEventListener() {
@@ -156,9 +168,9 @@ public class ActivityQuanLyUser extends AppCompatActivity implements RecyclerVie
                     if (roleTem != user.getIsAdmin()){
                         if(user.getNoti() == null){
                             user.setNoti(new Stack<>());
-                            user.getNoti().add((Calendar.DATE)+": "+"Bạn đã được thay đổi vai trò");
+                            user.getNoti().add(getDate()+": "+"Bạn đã được thay đổi vai trò");
                         }else {
-                            user.getNoti().add((Calendar.DATE)+": "+"Bạn đã được thay đổi vai trò");
+                            user.getNoti().add(getDate()+": "+"Bạn đã được thay đổi vai trò");
                         }
                     }
                     DatabaseReference databaseReference = databaseref.child("user").child(key);
@@ -179,5 +191,10 @@ public class ActivityQuanLyUser extends AppCompatActivity implements RecyclerVie
     @Override
     public void itemClickGame(int position, String gameType) {
 
+    }
+    public String getDate(){
+        LocalDate currentDate = LocalDate.now();
+        String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return formattedDate;
     }
 }

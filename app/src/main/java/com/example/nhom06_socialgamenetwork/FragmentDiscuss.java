@@ -57,6 +57,8 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -103,7 +105,7 @@ public class FragmentDiscuss extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 Discuss discuss1 = list.get(viewHolder.getBindingAdapterPosition()).second;
                 String key = list.get(viewHolder.getBindingAdapterPosition()).first;
-                if (discuss1.getNamePost().equals(MainActivity.user.getEmail()) || MainActivity.user.getIsAdmin() == 1) {
+                if (discuss1.getNamePost().equals(MainActivity.user.getEmail()) || MainActivity.user.getIsAdmin() > 0) {
                     DatabaseReference dbedit = databaseReference.child("discuss").child(key);
                     if (discuss1.getIsDelete() == 0) {
                         discuss1.setIsDelete(1);
@@ -122,18 +124,21 @@ public class FragmentDiscuss extends Fragment {
                                         query.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                User user = new User();
+                                                String key = "";
                                                 if (snapshot.exists()){
                                                     for (DataSnapshot snapshot1 : snapshot.getChildren()){
-                                                        User user = snapshot1.getValue(User.class);
-                                                        if (user.getNoti() == null){
-                                                            user.setNoti(new ArrayList<>());
-                                                            user.getNoti().add((Calendar.DATE)+": " + " Bài viết của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
-                                                        }else {
-                                                            user.getNoti().add((Calendar.DATE)+": " + " Bài viết của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
-                                                        }
-                                                        DatabaseReference dataedit = databaseReference.child("user").child(snapshot1.getKey());
-                                                        dataedit.setValue(user);
+                                                        user = snapshot1.getValue(User.class);
+                                                        key = snapshot1.getKey();
                                                     }
+                                                    if (user.getNoti() == null){
+                                                        user.setNoti(new ArrayList<>());
+                                                        user.getNoti().add(getDate()+": " + " Bài viết của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
+                                                    }else {
+                                                        user.getNoti().add(getDate()+": " + " Bài viết của bạn đã bị admin xóa do vi phạm tiêu chuẩn vui lòng kiểm tra thùng rác");
+                                                    }
+                                                    DatabaseReference dataedit = databaseReference.child("user").child(key);
+                                                    dataedit.setValue(user);
                                                 }
                                             }
 
@@ -419,5 +424,10 @@ public class FragmentDiscuss extends Fragment {
         ContentResolver ct = FragmentDiscuss.this.getContext().getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(ct.getType(uri));
+    }
+    public String getDate(){
+        LocalDate currentDate = LocalDate.now();
+        String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return formattedDate;
     }
 }
