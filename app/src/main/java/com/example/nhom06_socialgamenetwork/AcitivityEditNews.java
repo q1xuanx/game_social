@@ -473,7 +473,10 @@ public class AcitivityEditNews extends AppCompatActivity {
                 ask.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (news.getPicNews().get(viewHolder.getBindingAdapterPosition()).contains("picture:") || Patterns.WEB_URL.matcher(news.getPicNews().get(viewHolder.getBindingAdapterPosition())).matches()) {
+                        if (news.getPicNews().size() == 1){
+                            Toast.makeText(AcitivityEditNews.this, "Không được xóa hết nội dung", Toast.LENGTH_SHORT).show();
+                            recyclerView.getAdapter().notifyItemChanged(viewHolder.getBindingAdapterPosition());
+                        } else if (news.getPicNews().get(viewHolder.getBindingAdapterPosition()).contains("picture:") || Patterns.WEB_URL.matcher(news.getPicNews().get(viewHolder.getBindingAdapterPosition())).matches()) {
                             saveURLDelete.add(news.getPicNews().get(viewHolder.getBindingAdapterPosition()));
                             news.getPicNews().remove(viewHolder.getBindingAdapterPosition());
                             adapter.delData(viewHolder.getBindingAdapterPosition());
