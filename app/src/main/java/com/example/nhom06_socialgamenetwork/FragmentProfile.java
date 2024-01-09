@@ -168,6 +168,13 @@ public class FragmentProfile extends Fragment {
                 dialog.setContentView(R.layout.dialog_changepass);
                 EditText pass = dialog.findViewById(R.id.password), passnew = dialog.findViewById(R.id.passwordnew), passnewconf = dialog.findViewById(R.id.passwordnewconfirm);
                 Button changPass = dialog.findViewById(R.id.thayPass);
+                Button BackchangePass = dialog.findViewById(R.id.btnBackthayPass);
+                BackchangePass.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
                 changPass.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

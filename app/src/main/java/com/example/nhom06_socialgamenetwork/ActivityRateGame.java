@@ -70,6 +70,13 @@ public class ActivityRateGame extends AppCompatActivity {
                 SeekBar point = dialog.findViewById(R.id.seekBar2);
                 EditText comment = dialog.findViewById(R.id.rateUser);
                 Button addComment = dialog.findViewById(R.id.addRateGame);
+                Button backCommet =dialog.findViewById(R.id.btnBackRateGame);
+                backCommet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
                 addComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

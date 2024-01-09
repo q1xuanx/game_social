@@ -5,8 +5,9 @@
     android:orientation="vertical"
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
+    app:cardBackgroundColor="#F2D7FD"
     android:layout_height="match_parent">
-    <LinearLayout
+      <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
@@ -36,12 +37,19 @@
             android:layout_width="match_parent"
             android:layout_height="63dp">
         </Spinner>
-        <Button
-            android:id="@+id/themGameDeDanhGia"
-            android:layout_width="146dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Thêm"></Button>
+
+          <Button
+              android:id="@+id/themGameDeDanhGia"
+              android:layout_width="222dp"
+              android:layout_height="60dp"
+              android:layout_gravity="center"
+              android:text="Thêm"></Button>
+          <Button
+              android:id="@+id/btnBackAddGame"
+              android:layout_width="146dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:text="Back?"></Button>
 
     </LinearLayout>
 

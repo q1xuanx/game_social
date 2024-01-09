@@ -105,11 +105,20 @@ public class FragmentGame extends Fragment implements RecyclerViewInterface {
                 EditText nameGame = dialog.findViewById(R.id.tenGame);
                 EditText urlImg = dialog.findViewById(R.id.anhGame);
                 Button addGame = dialog.findViewById(R.id.themGameDeDanhGia);
+                Button BackGame =dialog.findViewById(R.id.btnBackAddGame);
                 Spinner spinner = dialog.findViewById(R.id.spinnerAddGame);
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(FragmentGame.this.getContext(),R.array.game_type, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
                 dialog.getWindow().setAttributes(changeSizeOfDialog(dialog));
+
+                BackGame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

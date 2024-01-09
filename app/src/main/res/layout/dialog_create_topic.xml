@@ -15,6 +15,7 @@
             android:visibility="gone"
             android:layout_gravity="center"
             android:layout_marginBottom="50dp"></ProgressBar>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="536dp"
@@ -75,6 +76,15 @@
                 android:background="@drawable/border_add"
                 android:text="Post It !">
             </androidx.appcompat.widget.AppCompatButton>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBackAddTopic"
+                android:layout_width="130dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_add"
+                android:text="Back?"></androidx.appcompat.widget.AppCompatButton>
 
         </LinearLayout>
 

@@ -191,9 +191,16 @@ public class FragmentDiscuss extends Fragment {
                     imgViewTopic = dialog.findViewById(R.id.imageViewTopic);
                     ProgressBar progressBar1 = dialog.findViewById(R.id.progressBar2);
                     Button addTopic = dialog.findViewById(R.id.addTopic);
+                    Button backTopic =dialog.findViewById(R.id.btnBackAddTopic);
                     userCreate.setText(MainActivity.user.getEmail());
                     title.setText(discuss1.getTitle());
                     details.setText(discuss1.getDetails());
+                    backTopic.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    });
                     image.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -298,6 +305,13 @@ public class FragmentDiscuss extends Fragment {
                 ImageButton image = dialog.findViewById(R.id.delPic);
                 ProgressBar progressBar1 = dialog.findViewById(R.id.progressBar2);
                 Button addTopic = dialog.findViewById(R.id.addTopic);
+                Button backTopic= dialog.findViewById(R.id.btnBackAddTopic);
+                backTopic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
                 image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

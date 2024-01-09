@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="450dp"
+    android:layout_height="500dp"
     android:background="@drawable/game_bg"
     android:orientation="vertical">
 
@@ -25,7 +25,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="336dp"
-        android:layout_height="294dp"
+        android:layout_height="350dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         app:cardCornerRadius="40dp">
@@ -69,12 +69,21 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addRateGame"
-                android:layout_width="227dp"
+                android:layout_width="221dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/border_add"
                 android:text="Post now?"></androidx.appcompat.widget.AppCompatButton>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBackRateGame"
+                android:layout_width="144dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/border_add"
+                android:text="Back?"></androidx.appcompat.widget.AppCompatButton>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

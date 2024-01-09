@@ -385,6 +385,13 @@ public class DiscussComment extends AppCompatActivity {
                 dialog.setContentView(R.layout.dialog_writecomment_topic);
                 EditText comment = dialog.findViewById(R.id.comment);
                 AppCompatButton post = dialog.findViewById(R.id.postComment);
+                AppCompatButton backPost = dialog.findViewById(R.id.btnBackComment);
+                backPost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
                 post.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

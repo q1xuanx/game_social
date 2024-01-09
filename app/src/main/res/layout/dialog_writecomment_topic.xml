@@ -31,9 +31,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView5"
         android:layout_width="350dp"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,12 +57,21 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/postComment"
-                android:layout_width="227dp"
-                android:layout_height="wrap_content"
+                android:layout_width="218dp"
+                android:layout_height="37dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/border_add"
                 android:text="Post now?"></androidx.appcompat.widget.AppCompatButton>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnBackComment"
+                android:layout_width="162dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/border_add"
+                android:text="Back?"></androidx.appcompat.widget.AppCompatButton>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
