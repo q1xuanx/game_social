@@ -38,7 +38,7 @@ public class AdapterDaXoaDiscuss extends RecyclerView.Adapter<AdapterDaXoaDiscus
     public void onBindViewHolder(@NonNull HolderView holder, int position) {
         Discuss discuss = list.get(position).second;
         int ok = 0;
-        if (discuss.getIdPic() != null){
+        if (discuss.getIdPic() != null && !discuss.getIdPic().equals("")){
             Picasso.get().load(discuss.getIdPic()).into(holder.imgPic);
             ok = 1;
         }

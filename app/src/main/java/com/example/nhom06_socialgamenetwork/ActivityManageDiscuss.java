@@ -134,6 +134,7 @@ public class ActivityManageDiscuss extends AppCompatActivity implements Recycler
                 Discuss discuss = list.get(postion).second;
                 String key = list.get(postion).first;
                 StorageReference delImg = FirebaseStorage.getInstance().getReferenceFromUrl(discuss.getIdPic());
+                if (delImg != null) delImg.delete();
                 DatabaseReference datadel = databaseReference.child("discuss").child(key);
                 datadel.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
