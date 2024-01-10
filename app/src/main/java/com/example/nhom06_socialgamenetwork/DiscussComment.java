@@ -45,6 +45,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class DiscussComment extends AppCompatActivity {
     Discuss discuss;
     TextView username, title, details, totalLike, totalDislike;
@@ -52,12 +58,13 @@ public class DiscussComment extends AppCompatActivity {
     Button like, dislike;
     RecyclerView listComment;
     AppCompatButton writeComment;
-    String key;
+    String key, predict;
     DatabaseReference databaseReference;
     List<String> listLike, listDislike;
     List<CommentDiscuss> discussComments;
     FloatingActionButton btnClose;
-
+    Retrofit retrofit;
+    CallApiRetrofit callApiRetrofit;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +79,7 @@ public class DiscussComment extends AppCompatActivity {
         writeCommentEvent();
         closeTopicEvent();
         delComment();
+        callAPI();
     }
 
     public void getData(Intent intent) {
@@ -127,7 +135,10 @@ public class DiscussComment extends AppCompatActivity {
             }
         });
     }
-
+    public void callAPI(){
+        retrofit = new Retrofit.Builder().baseUrl("https://7796-113-182-243-165.ngrok-free.app/").addConverterFactory(GsonConverterFactory.create()).build();
+        callApiRetrofit = retrofit.create(CallApiRetrofit.class);
+    }
     public void setContent() {
         username.setText(discuss.getNamePost());
         title.setText(discuss.getTitle());
@@ -400,40 +411,56 @@ public class DiscussComment extends AppCompatActivity {
                         } else {
                             DatabaseReference dbRef = databaseReference.child("discuss").child(key);
                             discuss.getComment().add(new CommentDiscuss(MainActivity.user.getEmail(), comment.getText().toString()));
-                            dbRef.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            Call<String> makePredict = callApiRetrofit.predictToxicity(comment.getText().toString());
+                            predict = "";
+                            makePredict.enqueue(new Callback<String>() {
                                 @Override
-                                public void onSuccess(Void unused) {
-                                    if (!discuss.getNamePost().equals(MainActivity.user.getEmail())) {
-                                        Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
-                                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    predict = response.body();
+                                    if (predict.equals("clean")) {
+                                        dbRef.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if (snapshot.exists()) {
-                                                    User user = new User();
-                                                    String key = "";
-                                                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                                        user = snapshot1.getValue(User.class);
-                                                        key = snapshot1.getKey();
-                                                    }
-                                                    if (user.getNoti() == null) {
-                                                        user.setNoti(new ArrayList<>());
-                                                        user.getNoti().add(getDate()  + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
-                                                    } else {
-                                                        user.getNoti().add(getDate()  + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
-                                                    }
-                                                    DatabaseReference dataedit = databaseReference.child("user").child(key);
-                                                    dataedit.setValue(user);
+                                            public void onSuccess(Void unused) {
+                                                if (!discuss.getNamePost().equals(MainActivity.user.getEmail())) {
+                                                    Query query = databaseReference.child("user").orderByChild("email").equalTo(discuss.getNamePost());
+                                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+                                                                User user = new User();
+                                                                String key = "";
+                                                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                                                    user = snapshot1.getValue(User.class);
+                                                                    key = snapshot1.getKey();
+                                                                }
+                                                                if (user.getNoti() == null) {
+                                                                    user.setNoti(new ArrayList<>());
+                                                                    user.getNoti().add(getDate() + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
+                                                                } else {
+                                                                    user.getNoti().add(getDate() + ": " + "Bạn có thêm bình luận mới ở bài viết " + discuss.getTitle());
+                                                                }
+                                                                DatabaseReference dataedit = databaseReference.child("user").child(key);
+                                                                dataedit.setValue(user);
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
                                                 }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
+                                                Toast.makeText(DiscussComment.this, "Đã bình luận", Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
                                             }
                                         });
+                                    }else {
+                                        Toast.makeText(DiscussComment.this, "Bạn đang mất bình tĩnh, vui lòng kiềm chế", Toast.LENGTH_SHORT).show();
                                     }
-                                    Toast.makeText(DiscussComment.this, "Đã bình luận", Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
+                                }
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+
                                 }
                             });
                         }

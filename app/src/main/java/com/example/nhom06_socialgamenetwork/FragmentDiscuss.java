@@ -63,6 +63,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class FragmentDiscuss extends Fragment {
 
     RecyclerView recyclerView;
@@ -73,6 +79,8 @@ public class FragmentDiscuss extends Fragment {
     DatabaseReference databaseReference;
     List<Pair<String, Discuss>> list;
     AdapterDiscuss adapterDiscuss;
+    Retrofit retrofit;
+    CallApiRetrofit callApiRetrofit;
 
     @Nullable
     @Override
@@ -82,6 +90,7 @@ public class FragmentDiscuss extends Fragment {
         addTopicEvent();
         deleteData();
         editData();
+        callAPI();
         return v;
     }
 
@@ -287,7 +296,10 @@ public class FragmentDiscuss extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
     }
-
+    public void callAPI(){
+        retrofit = new Retrofit.Builder().baseUrl("https://7796-113-182-243-165.ngrok-free.app/").addConverterFactory(GsonConverterFactory.create()).build();
+        callApiRetrofit = retrofit.create(CallApiRetrofit.class);
+    }
     public void addTopicEvent() {
         addTopic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -338,42 +350,56 @@ public class FragmentDiscuss extends Fragment {
                             discuss.setTitle(title.getText().toString());
                             discuss.setNamePost(MainActivity.user.getEmail());
                             discuss.setDatePost(String.valueOf(Calendar.getInstance().getTime()));
-                            // Neu ko co hinh anh duoc them
-                            if (discuss.getIdPic() == null || discuss.getIdPic().equals("")) {
-                                progressBar1.setVisibility(View.VISIBLE);
-                                DatabaseReference dbAdd = databaseReference.child("discuss").push();
-                                dbAdd.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        progressBar1.setVisibility(View.GONE);
-                                        Toast.makeText(FragmentDiscuss.this.getContext(), "Đăng bài thành công", Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
+                            Call<String> check = callApiRetrofit.predictToxicity(discuss.getDetails());
+                            check.enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    String predict = response.body();
+                                    if (predict.equals("clean")){
+                                        if (discuss.getIdPic() == null || discuss.getIdPic().equals("")) {
+                                            progressBar1.setVisibility(View.VISIBLE);
+                                            DatabaseReference dbAdd = databaseReference.child("discuss").push();
+                                            dbAdd.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    progressBar1.setVisibility(View.GONE);
+                                                    Toast.makeText(FragmentDiscuss.this.getContext(), "Đăng bài thành công", Toast.LENGTH_SHORT).show();
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                        } else {
+                                            //Neu co hinh anh duoc them vao
+                                            StorageReference storageReference = firebaseStorage.child(System.currentTimeMillis() + "." + getFileExtension(Uri.parse(discuss.getIdPic())));
+                                            storageReference.putFile(Uri.parse(discuss.getIdPic())).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                        @Override
+                                                        public void onSuccess(Uri uri) {
+                                                            discuss.setIdPic(uri.toString());
+                                                            DatabaseReference dbAdd = databaseReference.child("discuss").push();
+                                                            dbAdd.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void unused) {
+                                                                    progressBar1.setVisibility(View.GONE);
+                                                                    Toast.makeText(FragmentDiscuss.this.getContext(), "Đăng bài thành công", Toast.LENGTH_SHORT).show();
+                                                                    dialog.dismiss();
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    }else {
+                                        Toast.makeText(FragmentDiscuss.this.getContext(), "Bạn đang mất bình tĩnh, xin vui lòng kiềm chế", Toast.LENGTH_SHORT).show();
                                     }
-                                });
-                            } else {
-                                //Neu co hinh anh duoc them vao
-                                StorageReference storageReference = firebaseStorage.child(System.currentTimeMillis() + "." + getFileExtension(Uri.parse(discuss.getIdPic())));
-                                storageReference.putFile(Uri.parse(discuss.getIdPic())).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @Override
-                                            public void onSuccess(Uri uri) {
-                                                discuss.setIdPic(uri.toString());
-                                                DatabaseReference dbAdd = databaseReference.child("discuss").push();
-                                                dbAdd.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void unused) {
-                                                        progressBar1.setVisibility(View.GONE);
-                                                        Toast.makeText(FragmentDiscuss.this.getContext(), "Đăng bài thành công", Toast.LENGTH_SHORT).show();
-                                                        dialog.dismiss();
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }
-                                });
-                            }
+                                }
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+
+                                }
+                            });
                         }
                     }
                 });

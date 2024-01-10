@@ -43,6 +43,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class ActivityRateGame extends AppCompatActivity {
     ImageView imgView; // hinh anh cua game
     TextView gameName, totalPointGet; // ten game, va diem cua game
@@ -53,6 +59,8 @@ public class ActivityRateGame extends AppCompatActivity {
     List<GameComment> list;
     AdapterUserRateGame adapterUserRateGame; // adapter add comment
     DatabaseReference databaseReference;
+    Retrofit retrofit;
+    CallApiRetrofit callApiRetrofit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +79,7 @@ public class ActivityRateGame extends AppCompatActivity {
                 EditText comment = dialog.findViewById(R.id.rateUser);
                 Button addComment = dialog.findViewById(R.id.addRateGame);
                 Button backCommet =dialog.findViewById(R.id.btnBackRateGame);
+                callAPI();
                 backCommet.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -80,7 +89,6 @@ public class ActivityRateGame extends AppCompatActivity {
                 addComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         if(comment.getText().toString().equals("")){
                             Toast.makeText(ActivityRateGame.this, "Vui lòng nhập ý kiến của bạn", Toast.LENGTH_SHORT);
                         }else {
@@ -91,25 +99,42 @@ public class ActivityRateGame extends AppCompatActivity {
                                     if (snapshot.exists()){
                                         Game game = snapshot.getValue(Game.class);
                                         GameComment gm = new GameComment(MainActivity.user.getEmail(), comment.getText().toString(), point.getProgress());
-                                        if (game.getList() == null){
-                                            List<GameComment> listComment = new ArrayList<>();
-                                            game.setList(listComment);
-                                            game.getList().add(gm);
-                                        }else {
-                                            game.getList().add(gm);
-                                        }
-                                        dbref.setValue(game).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        Call<String> check = callApiRetrofit.predictToxicity(comment.getText().toString());
+                                        check.enqueue(new Callback<String>() {
                                             @Override
-                                            public void onSuccess(Void unused) {
-                                                Toast.makeText(ActivityRateGame.this, "Cảm ơn đánh giá của bạn", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
+                                            public void onResponse(Call<String> call, Response<String> response) {
+                                                String predict = response.body();
+                                                if (predict.equals("clean")){
+                                                    if (game.getList() == null){
+                                                        List<GameComment> listComment = new ArrayList<>();
+                                                        game.setList(listComment);
+                                                        game.getList().add(gm);
+                                                    }else {
+                                                        game.getList().add(gm);
+                                                    }
+
+                                                    dbref.setValue(game).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                            Toast.makeText(ActivityRateGame.this, "Cảm ơn đánh giá của bạn", Toast.LENGTH_SHORT).show();
+                                                            dialog.dismiss();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(ActivityRateGame.this, "Có lỗi xảy ra trong quá trình rate game", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }else {
+                                                    Toast.makeText(ActivityRateGame.this, "Bạn đang mất bình tĩnh, vui lòng kiềm chế",Toast.LENGTH_SHORT).show();
+                                                }
                                             }
-                                        }).addOnFailureListener(new OnFailureListener() {
                                             @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(ActivityRateGame.this, "Có lỗi xảy ra trong quá trình rate game", Toast.LENGTH_SHORT).show();
+                                            public void onFailure(Call<String> call, Throwable t) {
+
                                             }
                                         });
+
                                     }
                                 }
 
@@ -152,6 +177,10 @@ public class ActivityRateGame extends AppCompatActivity {
             }
         });
         delComment();
+    }
+    public void callAPI(){
+        retrofit = new Retrofit.Builder().baseUrl("https://7796-113-182-243-165.ngrok-free.app/").addConverterFactory(GsonConverterFactory.create()).build();
+        callApiRetrofit = retrofit.create(CallApiRetrofit.class);
     }
     public void delComment(){
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
