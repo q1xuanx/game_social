@@ -30,10 +30,13 @@
             android:name=".ActivityRegister"
             android:exported="false" />
         <activity
+            android:name=".ActivityLogin"
+            android:exported="false" />
+        <activity
             android:name=".ActivityQuanLyTinTuc"
             android:exported="true" />
         <activity
-            android:name=".ActivityLogin"
+            android:name=".ActivityLoading"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
