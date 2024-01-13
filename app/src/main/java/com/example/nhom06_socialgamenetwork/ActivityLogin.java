@@ -38,6 +38,7 @@ public class ActivityLogin extends AppCompatActivity {
     DatabaseReference databaseReference;
     SharedPreferences sharedPreferences;
     TextView forgetPass;
+    User user;
     private static final String PREF_EMAIL = "email";
     private static final String PREF_PASSWORD = "password";
 
@@ -49,8 +50,7 @@ public class ActivityLogin extends AppCompatActivity {
         showPassEvent();
         signUpEvent();
         loginEvent();
-
-        // Check for saved email and password
+        forgetPassEvent();
         String savedEmail = sharedPreferences.getString(PREF_EMAIL, null);
         String savedPassword = sharedPreferences.getString(PREF_PASSWORD, null);
 
@@ -90,6 +90,7 @@ public class ActivityLogin extends AppCompatActivity {
             public void onClick(View view) {
                 Dialog dialog = new Dialog(ActivityLogin.this);
                 dialog.setContentView(R.layout.dialog_laylaimatkhau);
+                dialog.show();
                 TextInputEditText email = dialog.findViewById(R.id.inputEmailForget), password = dialog.findViewById(R.id.inputPasswordNew), confirmpass = dialog.findViewById(R.id.inputConfirmPasswordNew);
                 Button findPass = dialog.findViewById(R.id.thayDoiPass);
                 email.addTextChangedListener(new TextWatcher() {
@@ -100,7 +101,7 @@ public class ActivityLogin extends AppCompatActivity {
 
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        if(Patterns.EMAIL_ADDRESS.matcher(charSequence).matches()){
+                        if(!Patterns.EMAIL_ADDRESS.matcher(charSequence).matches()){
                             email.setError("Không đúng định dạng email");
                         }else email.setError(null);
                     }
@@ -119,17 +120,17 @@ public class ActivityLogin extends AppCompatActivity {
                             Toast.makeText(ActivityLogin.this, "Mật khẩu nhập lại không khớp", Toast.LENGTH_SHORT).show();
                         }else {
                             Query checkEmail = databaseReference.child("user").orderByChild("email").equalTo(email.getText().toString());
-                            checkEmail.addValueEventListener(new ValueEventListener() {
+                            checkEmail.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){
-                                        User user = new User();
+                                        user = new User();
                                         String key = "";
                                         for (DataSnapshot snapshot1 : snapshot.getChildren()){
                                             user = snapshot1.getValue(User.class);
                                             key = snapshot1.getKey();
                                         }
-                                        user.setPass(pass.getText().toString());
+                                        user.setPass(password.getText().toString());
                                         DatabaseReference editPass = databaseReference.child("user").child(key);
                                         editPass.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

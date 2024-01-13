@@ -179,7 +179,7 @@ public class ActivityRateGame extends AppCompatActivity {
         delComment();
     }
     public void callAPI(){
-        retrofit = new Retrofit.Builder().baseUrl("https://7796-113-182-243-165.ngrok-free.app/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("https://3007-203-205-32-22.ngrok-free.app/").addConverterFactory(GsonConverterFactory.create()).build();
         callApiRetrofit = retrofit.create(CallApiRetrofit.class);
     }
     public void delComment(){

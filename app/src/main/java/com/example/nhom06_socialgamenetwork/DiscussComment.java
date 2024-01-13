@@ -136,7 +136,7 @@ public class DiscussComment extends AppCompatActivity {
         });
     }
     public void callAPI(){
-        retrofit = new Retrofit.Builder().baseUrl("https://7796-113-182-243-165.ngrok-free.app/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("https://3007-203-205-32-22.ngrok-free.app/").addConverterFactory(GsonConverterFactory.create()).build();
         callApiRetrofit = retrofit.create(CallApiRetrofit.class);
     }
     public void setContent() {
@@ -410,7 +410,6 @@ public class DiscussComment extends AppCompatActivity {
                             Toast.makeText(DiscussComment.this, "Vui lòng nhập ý kiến của bản", Toast.LENGTH_SHORT).show();
                         } else {
                             DatabaseReference dbRef = databaseReference.child("discuss").child(key);
-                            discuss.getComment().add(new CommentDiscuss(MainActivity.user.getEmail(), comment.getText().toString()));
                             Call<String> makePredict = callApiRetrofit.predictToxicity(comment.getText().toString());
                             predict = "";
                             makePredict.enqueue(new Callback<String>() {
@@ -418,6 +417,7 @@ public class DiscussComment extends AppCompatActivity {
                                 public void onResponse(Call<String> call, Response<String> response) {
                                     predict = response.body();
                                     if (predict.equals("clean")) {
+                                        discuss.getComment().add(new CommentDiscuss(MainActivity.user.getEmail(), comment.getText().toString()));
                                         dbRef.setValue(discuss).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {

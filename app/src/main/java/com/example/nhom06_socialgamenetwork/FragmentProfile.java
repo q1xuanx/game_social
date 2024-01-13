@@ -186,7 +186,7 @@ public class FragmentProfile extends Fragment {
                             Toast.makeText(FragmentProfile.this.getContext(), "Mật khẩu mới nhập không khớp", Toast.LENGTH_SHORT).show();
                         }else {
                             Query getData = databaseReference.child("user").orderByChild("email").equalTo(MainActivity.user.getEmail());
-                            getData.addValueEventListener(new ValueEventListener() {
+                            getData.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){
