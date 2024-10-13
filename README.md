@@ -12,7 +12,7 @@
 + <strong>Backend</strong>: Java, Firebase, Python (for machine learning tasks)
 + <strong>Frontend</strong>: Android application (Java)
 + <strong>Machine Learning</strong>: Integrated a model to detect and filter abusive comments.
-## Thanks for Dataset from for detect Vietnames toxic comment ❤️:  
+## Thanks for Dataset from @hoang2023vihos for detect Vietnames toxic comment ❤️:  
       @article{hoang2023vihos,
         title={ViHOS: Hate Speech Spans Detection for Vietnamese},
         author={Hoang, Phu Gia and Luu, Canh Duc and Tran, Khanh Quoc and Van Nguyen, Kiet and Nguyen, Ngan Luu-Thuy},
