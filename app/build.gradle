@@ -3,11 +3,11 @@ plugins {
     id 'com.google.gms.google-services'
 }
 android {
-    namespace 'com.example.nhom06_socialgamenetwork'
+    namespace 'com.example.nhom02_socialgamenetwork'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.nhom06_socialgamenetwork"
+        applicationId "com.example.nhom02_socialgamenetwork"
         minSdk 30
         targetSdk 33
         versionCode 1

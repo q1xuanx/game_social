@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Nhom06-SocialGameNetwork"
+rootProject.name = "Nhom02-SocialGameNetwork"
 include ':app'

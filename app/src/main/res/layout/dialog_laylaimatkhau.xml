@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="320dp"
+    android:layout_height="280dp"
     android:orientation="vertical">
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="288dp"
+        android:layout_gravity="center"
         android:layout_height="63dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputEmailForget"
@@ -15,18 +15,22 @@
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="288dp"
+        android:layout_gravity="center"
         android:layout_height="63dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputPasswordNew"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Password" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="288dp"
+        android:layout_gravity="center"
         android:layout_height="63dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputConfirmPasswordNew"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Confirm Password" />
