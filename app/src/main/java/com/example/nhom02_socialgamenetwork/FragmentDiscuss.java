@@ -83,7 +83,8 @@ public class FragmentDiscuss extends Fragment {
         addTopicEvent();
         deleteData();
         editData();
-        callAPI();
+        retrofit = ApiCall.getClient();
+        callApiRetrofit = retrofit.create(CallApiRetrofit.class);
         return v;
     }
 
@@ -288,10 +289,6 @@ public class FragmentDiscuss extends Fragment {
                 }
             }
         }).attachToRecyclerView(recyclerView);
-    }
-    public void callAPI(){
-        retrofit = new Retrofit.Builder().baseUrl("http://127.0.0.1:8000/").addConverterFactory(GsonConverterFactory.create()).build();
-        callApiRetrofit = retrofit.create(CallApiRetrofit.class);
     }
     public void addTopicEvent() {
         addTopic.setOnClickListener(new View.OnClickListener() {
